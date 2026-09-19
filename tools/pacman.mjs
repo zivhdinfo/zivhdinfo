@@ -7,14 +7,13 @@
 //
 // Hạt KHÔNG nằm trong bản vẽ mê cung mà được rải theo đúng đường chạy của
 // pacman. Nhờ vậy pacman ăn hết 100% hạt, màn chơi kết thúc thật thay vì bị fade
-// cắt ngang. Hệ quả: đường chạy của pacman KHÔNG thể ngẫu nhiên hoàn toàn, vì
-// ngẫu nhiên thì không quét hết. Nó là đường rắn bò có chèn những cú nhô lên /
-// thụt xuống ngẫu nhiên — trông đỡ máy móc mà vẫn phủ kín. Ma thì tự do lang
-// thang thật, vì chúng không phải ăn gì.
+// cắt ngang.
 //
-// Mọi thứ "ngẫu nhiên" đều chạy qua một PRNG seed cố định. Build phải lặp lại
-// cho ra đúng một kết quả, không thì mỗi lần workflow chạy lại đẻ ra một
-// header.svg khác và commit vô nghĩa.
+// Không có gì ngẫu nhiên ở đây: pacman quét rắn bò qua năm hành lang, ba con ma
+// bám đúng đường đó ở khoảng cách cố định. Đường đi cố định cũng có nghĩa build
+// lặp lại cho ra đúng một kết quả — cần thiết, vì workflow dựng lại và commit
+// file này, generator mà không tất định thì mỗi lần chạy lại commit một mê cung
+// khác, mãi mãi.
 
 const T = 20; // cạnh một ô mê cung
 const COLS = 56;
@@ -22,11 +21,8 @@ const MX = 40; // mê cung đặt ở đâu trong card 1200x280
 const MY = 30;
 
 export const STEP_PX = 14; // mỗi bước pacman dịch bao nhiêu px
-const GHOST_SPEED = [12.5, 14, 15.5]; // ma đi nhanh chậm khác nhau cho khỏi đều như một
+const TRAILS = [16, 30, 44]; // ba con ma bám sau pacman bao nhiêu bước
 const FRIGHT = 45; // ăn một hạt to thì ma sợ bao nhiêu bước
-const DETOUR_P = 0.09; // xác suất pacman nhô ra khỏi hành lang ở mỗi ô
-const STRAIGHT_P = 0.62; // ma thích đi thẳng cỡ nào, còn lại là rẽ
-const SEED = 20260919;
 const PAC_R = 9;
 export const CLEAR_PAUSE = 8; // đứng lại một nhịp sau khi ăn hạt cuối
 export const FLASH = 36; // mê cung nhấp nháy bao lâu để báo hết màn
@@ -86,18 +82,6 @@ const POWER = new Set(["1,1", "1,54", "9,1", "9,54"]);
 /* ----------------------------------------------------------------- tiện ích */
 
 const n2 = (n) => Number(n.toFixed(2));
-
-// mulberry32 — nhỏ, đủ tốt, và quan trọng nhất là lặp lại được.
-function makeRng(seed) {
-  let a = seed >>> 0;
-  return () => {
-    a = (a + 0x6d2b79f5) >>> 0;
-    let t = Math.imul(a ^ (a >>> 15), 1 | a);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-const pick = (arr, rand) => arr[Math.floor(rand() * arr.length)];
 
 // Hình pacman: đường tròn bán kính PAC_R khuyết một góc mồm mở về bên phải.
 // large-arc=1 sweep=0 để đi vòng dài, ngược chiều kim đồng hồ trên màn hình.
@@ -161,48 +145,18 @@ export const mazeFlash = () => bars(C.flash);
 
 /* ------------------------------------------------------------ đường đi */
 
-// Đường của pacman: quét lần lượt năm hành lang, đổi chiều mỗi hàng, thỉnh
-// thoảng nhô ra ô tường liền kề rồi quay lại. Cú nhô đó chỉ THÊM ô chứ không bỏ
-// ô nào, nên tính "quét hết hạt" vẫn còn nguyên.
-function pacCells(rand) {
+// Đường của pacman: quét lần lượt năm hành lang, đổi chiều mỗi hàng, nối bằng
+// bốn đoạn dọc. Phủ kín mọi ô hành lang nên ăn hết hạt là điều tất yếu.
+function pacCells() {
   const cells = [];
   let dir = 1;
   CORRIDORS.forEach((r, i) => {
     const from = dir === 1 ? 1 : COLS - 2;
     const to = dir === 1 ? COLS - 2 : 1;
-    for (let c = from; dir === 1 ? c <= to : c >= to; c += dir) {
-      cells.push([r, c]);
-      if (c !== from && c !== to && rand() < DETOUR_P) {
-        const opts = [r - 1, r + 1].filter((rr) => open(rr, c));
-        if (opts.length) {
-          const rr = pick(opts, rand);
-          cells.push([rr, c], [r, c]); // nhô ra rồi lùi về đúng chỗ cũ
-        }
-      }
-    }
+    for (let c = from; dir === 1 ? c <= to : c >= to; c += dir) cells.push([r, c]);
     if (i < CORRIDORS.length - 1) cells.push([r + 1, to], [r + 2, to]); // xuống hành lang kế
     dir *= -1;
   });
-  return cells;
-}
-
-// Đường của ma: lang thang thật. Ở mỗi ô chọn hướng trong số các hướng mở, bỏ
-// hướng quay đầu (trừ khi cụt), thiên về đi thẳng cho đỡ giật.
-const DIRS = [[0, 1], [0, -1], [1, 0], [-1, 0]];
-function ghostCells(start, dir0, n, rand) {
-  let [r, c] = start;
-  let d = dir0;
-  const cells = [[r, c]];
-  for (let i = 0; i < n; i++) {
-    const opts = DIRS.filter(([dr, dc]) => open(r + dr, c + dc));
-    const noBack = opts.filter(([dr, dc]) => !(dr === -d[0] && dc === -d[1]));
-    const from = noBack.length ? noBack : opts;
-    const straight = from.find(([dr, dc]) => dr === d[0] && dc === d[1]);
-    d = straight && rand() < STRAIGHT_P ? straight : pick(from, rand);
-    r += d[0];
-    c += d[1];
-    cells.push([r, c]);
-  }
   return cells;
 }
 
@@ -246,26 +200,10 @@ function pointAt({ segs, total }, dist) {
 // hold    = số slice giữ thêm sau khi hết màn (để fade ra)
 // days    = [{level, count}] theo ngày, cũ -> mới; null thì dùng một màu
 export function buildGame({ at, visible, hold, days }) {
-  const rand = makeRng(SEED);
-  const pacTrack = toSegments(pacCells(rand), "pacman");
+  const pacTrack = toSegments(pacCells(), "pacman");
   const steps = Math.ceil(pacTrack.total / STEP_PX) + 1;
 
   const pts = Array.from({ length: steps }, (_, s) => pointAt(pacTrack, s * STEP_PX));
-
-  // Ma: mỗi con một điểm xuất phát, một hướng, một tốc độ riêng -> chúng đến từ
-  // nhiều phía chứ không xếp hàng sau lưng pacman như trước.
-  const starts = [
-    [[5, 14], [0, 1]],
-    [[5, 41], [0, -1]],
-    [[7, 27], [-1, 0]],
-  ];
-  const ghostTracks = starts.map(([start, dir], i) => {
-    const need = Math.ceil((steps * GHOST_SPEED[i]) / T) + 4;
-    const track = toSegments(ghostCells(start, dir, need, rand), `ma ${i}`);
-    if (track.total < steps * GHOST_SPEED[i])
-      throw new Error(`ma ${i} hết đường trước khi hết màn`);
-    return track;
-  });
 
   // Ô nào pacman đi qua ở bước nào.
   const firstAt = new Map();
@@ -326,8 +264,9 @@ export function buildGame({ at, visible, hold, days }) {
     const parts = [
       `<use href="#${s % 4 < 2 ? "po" : "pc"}" transform="translate(${p.x},${p.y}) rotate(${p.deg})"/>`,
     ];
-    ghostTracks.forEach((track, i) => {
-      const g = pointAt(track, s * GHOST_SPEED[i]);
+    TRAILS.forEach((trail, i) => {
+      const g = pts[s - trail];
+      if (!g) return; // chưa tới lượt con ma này xuất hiện
       const flip = g.deg === 180 ? " scale(-1,1)" : "";
       parts.push(
         `<use href="#${scared(s) ? "gf" : `g${i}`}" transform="translate(${g.x},${g.y})${flip}"/>`

@@ -180,6 +180,18 @@ function timeline() {
     steps.push({ dur, state });
   };
 
+  // Màn game đi TRƯỚC: vừa mở trang là thấy pacman, hết màn mới sang màn code.
+  //
+  //   0 ┌fade vào┐ gameAt ── chạy ── gameEnd ┌fade ra┐   ┌fade vào┐ codeAt ── sửa ── codeEnd ┌fade ra┐   ┐
+  //                                                  └tối┘                                          └tối┘ └ quay lại 0
+  const screenOn = 0;
+  const gameAt = screenOn + XFADE; // màn game hiện đủ, pacman bắt đầu chạy
+  const probe = buildGame({ at: screenOn, visible: gameAt, hold: XFADE, days: DAYS });
+  const gameEnd = probe.endAt; // đã gồm nhịp đứng lại và mê cung nhấp nháy hết màn
+  const codeAt = gameEnd + XFADE + XBLACK + XFADE;
+
+  snap(codeAt, null); // suốt màn game, cả ba dòng code đứng yên ở giá trị đầu
+
   for (let round = 1; round <= rounds; round++) {
     for (const line of LINES) {
       const before = cur[line.key];
@@ -206,25 +218,18 @@ function timeline() {
     }
   }
 
-  // Sửa xong cả ba dòng thì chuyển sang màn pacman. Suốt màn đó code đứng yên ở
-  // giá trị đầu, nên chỉ cần một bước dài là đủ cho cả ba dòng.
-  //
-  //   codeEnd ──fade ra──┐   ┌──fade vào── gameAt ─── chạy ─── gameEnd ──fade ra──┐   ┌──fade vào── hết vòng
-  //                      └tối┘                                                    └tối┘
+  // Sửa xong cả ba dòng thì fade về đen rồi quay lại đầu chu kỳ, nơi màn game
+  // lại ló ra. Không cần nhịp fade-vào ở cuối: nó chính là nhịp ở t=0.
   const codeEnd = steps.reduce((a, s) => a + s.dur, 0);
-  const screenOn = codeEnd + XFADE + XBLACK; // màn game bắt đầu ló ra
-  const gameAt = screenOn + XFADE; // đã hiện đủ, pacman bắt đầu chạy
-  const probe = buildGame({ at: screenOn, visible: gameAt, hold: XFADE, days: DAYS });
-  const gameEnd = probe.endAt; // đã gồm nhịp đứng lại và mê cung nhấp nháy hết màn
-  const cycle = gameEnd + XFADE + XBLACK + XFADE;
+  const cycle = codeEnd + XFADE + XBLACK;
 
   snap(cycle - codeEnd, null);
 
-  return { steps, codeEnd, screenOn, gameAt, gameEnd, game: probe };
+  return { steps, screenOn, gameAt, gameEnd, codeAt, codeEnd, game: probe };
 }
 
 function header() {
-  const { steps, codeEnd, screenOn, gameAt, gameEnd, game } = timeline();
+  const { steps, screenOn, gameAt, gameEnd, codeAt, codeEnd, game } = timeline();
   const total = steps.reduce((a, s) => a + s.dur, 0);
   const dur = n2(total * SLICE);
 
@@ -335,10 +340,10 @@ function header() {
   const at = (slice) => Number(((slice / total) * 100).toFixed(4));
   const screens =
     `    .sc, .sg { animation-duration:${dur}s; animation-timing-function:linear; animation-iteration-count:infinite }\n` +
-    `    .sc { animation-name:sc }\n` +
+    `    .sc { animation-name:sc; opacity:0 }\n` +
     `    .sg { animation-name:sg; opacity:0 }\n` +
-    `    @keyframes sc { 0%,${at(codeEnd)}% { opacity:1 } ${at(codeEnd + XFADE)}%,${at(total - XFADE)}% { opacity:0 } 100% { opacity:1 } }\n` +
-    `    @keyframes sg { 0%,${at(screenOn)}% { opacity:0 } ${at(gameAt)}%,${at(gameEnd)}% { opacity:1 } ${at(gameEnd + XFADE)}%,100% { opacity:0 } }`;
+    `    @keyframes sg { 0% { opacity:0 } ${at(gameAt)}%,${at(gameEnd)}% { opacity:1 } ${at(gameEnd + XFADE)}%,100% { opacity:0 } }\n` +
+    `    @keyframes sc { 0%,${at(gameEnd + XFADE + XBLACK)}% { opacity:0 } ${at(codeAt)}%,${at(codeEnd)}% { opacity:1 } ${at(codeEnd + XFADE)}%,100% { opacity:0 } }`;
 
   const label = LINES.map((l) => `${l.key}: ${l.values[0]}`).join("; ");
 
