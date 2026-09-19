@@ -38,5 +38,7 @@ Nhớ sửa **cả hai bản** light và dark.
 - Chỉ còn một animation duy nhất: con trỏ nháy cuối đoạn code. Ai bật
   `prefers-reduced-motion` thì nó đứng yên.
 - Link ảnh phải tuyệt đối (`raw.githubusercontent.com`), README profile không
-  ăn đường dẫn tương đối. GitHub cache qua camo: sửa ảnh mà chưa thấy đổi thì
-  thêm `?v=2` vào cuối link.
+  ăn đường dẫn tương đối. Dùng `HEAD` trong link thay vì tên branch —
+  `raw.githubusercontent.com` tự resolve về default branch, nên đổi tên branch
+  hay đặt default branch khác cũng không gãy ảnh. GitHub cache qua camo: sửa
+  ảnh mà chưa thấy đổi thì thêm `?v=2` vào cuối link.
