@@ -28,8 +28,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # Lấy lịch sử contribution rồi dựng lại SVG để hạt đậu trong màn pacman
-      # đúng màu. Chỉ dựng lại khi dữ liệu thật sự đổi — header.svg to, không nên
-      # commit lại mỗi 6 tiếng dù chẳng có gì mới.
+      # đúng màu. Nguồn chính là github-contributions-api.jogruber.de, hỏng thì
+      # tự lùi về đọc trang public của GitHub. Chỉ dựng lại khi dữ liệu thật sự
+      # đổi — header.svg to, không nên commit lại mỗi 6 tiếng dù chẳng có gì mới.
       - name: Refresh contributions
         run: node .github/scripts/contributions.mjs
 
