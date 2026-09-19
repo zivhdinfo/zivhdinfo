@@ -4,38 +4,54 @@
 // build-assets.mjs): chuyển động = mỗi bước một khung đứng yên. Pacman và cả ba
 // con ma của cùng một bước nằm CHUNG một khung — vừa gọn hơn bốn chuỗi khung
 // riêng, vừa không đời nào lệch nhịp nhau.
+//
+// Hạt đậu KHÔNG nằm trong bản vẽ mê cung mà được rải theo đúng đường chạy. Nhờ
+// vậy Pac-Man ăn hết 100% hạt, màn chơi kết thúc thật (mê cung nhấp nháy kiểu
+// "level clear") thay vì bị fade cắt ngang giữa chừng.
+//
+// Màu hạt lấy từ lịch sử contribution nếu có tools/contributions.json, theo đúng
+// 5 mức xanh của GitHub. Hạt xếp theo thứ tự đường chạy = thứ tự thời gian, nên
+// Pac-Man ăn dần từ ngày cũ tới ngày mới.
 
 const T = 20; // cạnh một ô mê cung
 const COLS = 56;
 const MX = 40; // mê cung đặt ở đâu trong card 1200x280
 const MY = 30;
 
-export const STEP_PX = 7; // mỗi bước pacman dịch bao nhiêu px
+export const STEP_PX = 14; // mỗi bước pacman dịch bao nhiêu px
 const FRIGHT = 45; // ăn một hạt to thì ma sợ bao nhiêu bước
-const TRAILS = [14, 26, 38]; // ba con ma bám sau pacman bao nhiêu bước
+const TRAILS = [16, 30, 44]; // ba con ma bám sau pacman bao nhiêu bước
 const PAC_R = 9;
+export const CLEAR_PAUSE = 8; // đứng lại một nhịp sau khi ăn hạt cuối
+export const FLASH = 36; // mê cung nhấp nháy bao lâu để báo hết màn
+
+// 5 mức xanh của contribution graph (theme tối). Mức 0 nhấc sáng hơn GitHub một
+// chút, không thì hạt "ngày không commit" chìm hẳn vào nền card.
+const LEVELS = ["#1f2730", "#0e4429", "#006d32", "#26a641", "#39d353"];
+const FALLBACK = "#26a641"; // chưa có dữ liệu thì dùng một màu, không bịa mức
 
 const C = {
   wall: "#2f4fd8",
-  pellet: "#f2d9a0",
+  flash: "#dfe6ff",
   pac: "#f7df1e",
   ghosts: ["#ff4b4b", "#ffb8de", "#69e6ff"],
   fright: "#2b34d9",
   eye: "#ffffff",
   pupil: "#1b2559",
   ready: "#f7df1e",
+  clear: "#39d353",
 };
 
 /* ------------------------------------------------------------------ mê cung */
 // Mỗi dòng viết nửa trái 28 ký tự rồi soi gương — vừa chắc chắn đúng 56 cột,
-// vừa tự đối xứng. '#' tường, '.' hạt đậu, 'o' hạt to.
+// vừa tự đối xứng. Chỉ '#' có nghĩa (tường); ký tự khác đều là hành lang.
 
 const W = (n) => "#".repeat(n);
 const D = (n) => ".".repeat(n);
 
 const HALF = [
   W(28), // r0  viền trên
-  "#" + "o" + D(26), // r1  hành lang, hạt to ở góc
+  "#" + D(27), // r1  hành lang
   "#" + D(1) + W(4) + D(1) + W(5) + D(1) + W(4) + D(1) + W(4) + D(1) + D(5), // r2
   "#" + D(27), // r3  hành lang
   "#" + D(1) + W(5) + D(1) + W(3) + D(1) + W(5) + D(1) + W(5) + D(5), // r4
@@ -43,7 +59,7 @@ const HALF = [
   "#" + D(1) + W(5) + D(1) + W(3) + D(1) + W(5) + D(1) + W(5) + D(5), // r6
   "#" + D(27), // r7  hành lang
   "#" + D(1) + W(4) + D(1) + W(5) + D(1) + W(4) + D(1) + W(4) + D(1) + D(5), // r8
-  "#" + "o" + D(26), // r9  hành lang, hạt to ở góc
+  "#" + D(27), // r9  hành lang
   W(28), // r10 viền dưới
 ];
 
@@ -55,12 +71,15 @@ export const MAZE = HALF.map((h, i) => {
 const cxOf = (c) => MX + c * T + T / 2;
 const cyOf = (r) => MY + r * T + T / 2;
 
-// Đường chạy của pacman, theo ô [hàng, cột]. Mỗi đoạn phải đi dọc hành lang;
-// đoạn dọc phải cắt qua cột đang mở của hàng tường ở giữa (có assert bên dưới).
+// Đường chạy rắn bò: quét hết năm hành lang ngang, nối bằng bốn đoạn dọc. Hạt
+// rải đúng theo đường này nên ăn hết là sạch màn.
 const ROUTE = [
-  [3, 1], [1, 1], [1, 17], [3, 17], [3, 32],
-  [5, 32], [5, 48], [7, 48], [7, 54], [9, 54], [9, 40],
+  [1, 1], [1, 54], [3, 54], [3, 1], [5, 1],
+  [5, 54], [7, 54], [7, 1], [9, 1], [9, 54],
 ];
+
+// Hạt to ở bốn góc — cả bốn đều nằm trên đường chạy nên đều được ăn.
+const POWER = new Set(["1,1", "1,54", "9,1", "9,54"]);
 
 /* ----------------------------------------------------------------- tiện ích */
 
@@ -98,30 +117,33 @@ export const DEFS = [
   ghostDef("gf", C.fright, false),
 ].join("\n    ");
 
-/* --------------------------------------------------------- tường và hạt đậu */
+/* --------------------------------------------------------------- vẽ tường */
 
 // Gộp các ô tường liền nhau trong một hàng thành một thanh -> vài chục <rect>
 // thay vì vài trăm, và trông đúng kiểu thanh ngang của mê cung gốc.
-export function mazeMarkup() {
-  const bars = [];
+function bars(stroke) {
+  const out = [];
   for (let r = 1; r < MAZE.length - 1; r++) {
     let run = 0;
     for (let c = 1; c <= COLS - 1; c++) {
       const wall = c < COLS - 1 && MAZE[r][c] === "#";
       if (wall) run++;
       else if (run) {
-        bars.push(
-          `<rect x="${MX + (c - run) * T + 2}" y="${MY + r * T + 4}" width="${run * T - 4}" height="${T - 8}" rx="5" fill="none" stroke="${C.wall}" stroke-width="2"/>`
+        out.push(
+          `<rect x="${MX + (c - run) * T + 2}" y="${MY + r * T + 4}" width="${run * T - 4}" height="${T - 8}" rx="5" fill="none" stroke="${stroke}" stroke-width="2"/>`
         );
         run = 0;
       }
     }
   }
   return (
-    `<rect x="${MX + 6}" y="${MY + 6}" width="${COLS * T - 12}" height="${MAZE.length * T - 12}" rx="12" fill="none" stroke="${C.wall}" stroke-width="2.5"/>\n    ` +
-    bars.join("\n    ")
+    `<rect x="${MX + 6}" y="${MY + 6}" width="${COLS * T - 12}" height="${MAZE.length * T - 12}" rx="12" fill="none" stroke="${stroke}" stroke-width="2.5"/>` +
+    out.join("")
   );
 }
+
+export const mazeMarkup = () => bars(C.wall);
+export const mazeFlash = () => bars(C.flash);
 
 /* ---------------------------------------------------- đường chạy của pacman */
 
@@ -155,87 +177,114 @@ function walk() {
   return pts;
 }
 
+// Mọi ô nằm trên đường chạy, theo đúng thứ tự đi qua. Đây vừa là chỗ đặt hạt,
+// vừa là trục thời gian để gắn lịch sử contribution vào.
+function routeCells(pts) {
+  const seen = new Set();
+  const cells = [];
+  for (const p of pts) {
+    const key = `${p.r},${p.c}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    cells.push({ ...p, key });
+  }
+  return cells;
+}
+
 /* ------------------------------------------------------------------- dựng */
 
-// at      = slice mà màn game hiện hình (bắt đầu fade vào)
-// visible = slice mà màn game đã hiện đủ, pacman bắt đầu chạy
-// hold    = số slice giữ thêm sau bước cuối (để fade ra)
-export function buildGame({ at, visible, hold }) {
+// at      = slice màn game bắt đầu ló ra
+// visible = slice màn game hiện đủ, pacman bắt đầu chạy
+// hold    = số slice giữ thêm sau khi hết màn (để fade ra)
+// levels  = mảng mức contribution 0..4 theo ngày, cũ -> mới; null thì dùng một màu
+export function buildGame({ at, visible, hold, levels }) {
   const pts = walk();
   const steps = pts.length;
+  const cells = routeCells(pts);
 
-  // Hạt nào bị ăn ở bước nào; hạt không nằm trên đường chạy thì ở lại tới hết màn.
-  const eaten = new Map();
+  // Ô nào bị đi qua ở bước nào.
+  const firstAt = new Map();
   pts.forEach((p, s) => {
     const key = `${p.r},${p.c}`;
-    if (!eaten.has(key)) eaten.set(key, s);
+    if (!firstAt.has(key)) firstAt.set(key, s);
   });
 
   // Ăn hạt to -> ma chuyển sang sợ trong FRIGHT bước.
-  const frightFrom = [];
-  for (const [key, s] of eaten) {
-    const [r, c] = key.split(",").map(Number);
-    if (MAZE[r][c] === "o") frightFrom.push(s);
-  }
+  const frightFrom = cells.filter((c) => POWER.has(c.key)).map((c) => firstAt.get(c.key));
   const scared = (s) => frightFrom.some((f) => s >= f && s < f + FRIGHT);
 
-  const lastAt = visible + steps - 1;
-  const endAt = lastAt + hold;
+  const lastStep = visible + steps - 1;
+  const clearAt = lastStep + CLEAR_PAUSE; // ăn xong, đứng một nhịp rồi nhấp nháy
+  const endAt = clearAt + FLASH;
 
-  /* --- hạt đậu --- */
-  // Hạt pacman không đi qua thì chẳng bao giờ tắt, nên không cần khung riêng —
-  // để tĩnh trong lớp màn game là xong (lớp đó vốn đã ẩn ngoài màn). Chỉ hạt bị
-  // ăn mới cần khung để tắt đúng lúc. Gần 270/346 hạt rơi vào diện tĩnh.
-  const dots = [];
-  const still = [];
-  for (let r = 0; r < MAZE.length; r++) {
-    for (let c = 0; c < COLS; c++) {
-      const ch = MAZE[r][c];
-      if (ch !== "." && ch !== "o") continue;
-      const x = cxOf(c), y = cyOf(r);
-      const big = ch === "o";
-      const m = big
-        ? `<circle class="pw" cx="${x}" cy="${y}" r="5.5" fill="${C.pellet}"/>`
-        : `<circle cx="${x}" cy="${y}" r="2.5" fill="${C.pellet}"/>`;
-      const hit = eaten.get(`${r},${c}`);
-      if (hit === undefined) still.push(m);
-      else if (visible + hit - at > 0) dots.push({ at, dur: visible + hit - at, m });
-    }
-  }
+  /* --- hạt đậu: một hạt mỗi ô trên đường chạy, tất cả đều sẽ bị ăn --- */
+  // Hạt thứ i ứng với ngày thứ i tính từ cuối lịch sử, nên ăn từ cũ tới mới.
+  const tail = levels ? levels.slice(-cells.length) : null;
+  const dots = cells.map((cell, i) => {
+    const big = POWER.has(cell.key);
+    const level = tail ? tail[i - (cells.length - tail.length)] : undefined;
+    const fill = level === undefined ? FALLBACK : LEVELS[Math.min(4, Math.max(0, level))];
+    const x = cxOf(cell.c), y = cyOf(cell.r);
+    return {
+      at,
+      dur: visible + firstAt.get(cell.key) - at,
+      m: big
+        ? `<circle class="pw" cx="${x}" cy="${y}" r="5.5" fill="${fill}"/>`
+        : `<circle cx="${x}" cy="${y}" r="2.5" fill="${fill}"/>`,
+    };
+  });
+  if (dots.some((d) => d.dur <= 0)) throw new Error("có hạt tắt trước khi màn game hiện ra");
 
   /* --- pacman + ba con ma, mỗi bước một khung --- */
   const sprites = [];
   for (let s = 0; s < steps; s++) {
     const p = pts[s];
-    const mouth = s % 4 < 2 ? "po" : "pc";
     const parts = [
-      `<use href="#${mouth}" transform="translate(${p.x},${p.y}) rotate(${p.deg})"/>`,
+      `<use href="#${s % 4 < 2 ? "po" : "pc"}" transform="translate(${p.x},${p.y}) rotate(${p.deg})"/>`,
     ];
     TRAILS.forEach((trail, i) => {
       const g = pts[s - trail];
       if (!g) return;
       const flip = g.deg === 180 ? " scale(-1,1)" : "";
-      const id = scared(s) ? "gf" : `g${i}`;
-      parts.push(`<use href="#${id}" transform="translate(${g.x},${g.y})${flip}"/>`);
+      parts.push(
+        `<use href="#${scared(s) ? "gf" : `g${i}`}" transform="translate(${g.x},${g.y})${flip}"/>`
+      );
     });
     sprites.push({
-      at: visible + s,
-      // Khung đầu kéo ngược về lúc màn ló ra, khung cuối giữ thêm để kịp fade ra.
-      ...(s === 0 ? { at, dur: visible - at + 1 } : {}),
-      dur: s === 0 ? visible - at + 1 : s === steps - 1 ? 1 + hold : 1,
+      at: s === 0 ? at : visible + s,
+      // Khung đầu kéo ngược về lúc màn ló ra để fade vào đã có hình.
+      dur: s === 0 ? visible - at + 1 : 1,
       m: parts.join(""),
     });
   }
 
-  // Nền tối phía sau để chữ không lẫn vào hàng hạt đậu.
+  // Ăn xong: ma biến mất, chỉ còn pacman đứng giữa mê cung đang nhấp nháy.
+  const last = pts[steps - 1];
+  sprites.push({
+    at: lastStep + 1,
+    dur: CLEAR_PAUSE + FLASH + hold,
+    m: `<use href="#pc" transform="translate(${last.x},${last.y}) rotate(${last.deg})"/>`,
+  });
+
+  // Mê cung trắng chồng lên bản xanh, nhấp nháy bằng animation riêng bên trong.
+  const flash = {
+    at: clearAt,
+    dur: FLASH,
+    m: `<g class="fl">${mazeFlash()}</g>`,
+  };
+
   const ry = cyOf(5);
+  const plate = (w) => `<rect x="${600 - w / 2}" y="${ry - 14}" width="${w}" height="28" rx="6" fill="#09090b"/>`;
   const ready = {
     at,
     dur: Math.min(28, visible - at + 20),
-    m:
-      `<rect x="546" y="${ry - 14}" width="108" height="28" rx="6" fill="#09090b"/>` +
-      `<text x="600" y="${ry + 7}" text-anchor="middle" font-size="20" font-weight="bold" fill="${C.ready}">READY!</text>`,
+    m: plate(108) + `<text x="600" y="${ry + 7}" text-anchor="middle" font-size="20" font-weight="bold" fill="${C.ready}">READY!</text>`,
+  };
+  const clear = {
+    at: clearAt,
+    dur: FLASH + hold,
+    m: plate(200) + `<text x="600" y="${ry + 7}" text-anchor="middle" font-size="20" font-weight="bold" fill="${C.clear}">LEVEL CLEAR</text>`,
   };
 
-  return { steps, dots, still, sprites, ready, endAt };
+  return { steps, cells: cells.length, dots, sprites, flash, ready, clear, endAt };
 }

@@ -51,6 +51,17 @@ import { buildGame, DEFS, mazeMarkup } from "./pacman.mjs";
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const ICONS = JSON.parse(await readFile(join(ROOT, "tools/icons.json"), "utf8"));
 
+// Lịch sử contribution để tô màu hạt đậu. File này do
+// .github/scripts/contributions.mjs sinh ra trong workflow — ở máy thường không
+// có cũng không sao, generator tự lùi về một màu xanh duy nhất chứ không bịa mức.
+const LEVELS = await readFile(join(ROOT, "tools/contributions.json"), "utf8").then(
+  (raw) => {
+    const days = JSON.parse(raw).days ?? [];
+    return days.length ? days.map((d) => d.level) : null;
+  },
+  () => null
+);
+
 const MONO =
   "ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace";
 const FONT = 19;
@@ -206,8 +217,8 @@ function timeline() {
   const codeEnd = steps.reduce((a, s) => a + s.dur, 0);
   const screenOn = codeEnd + XFADE + XBLACK; // màn game bắt đầu ló ra
   const gameAt = screenOn + XFADE; // đã hiện đủ, pacman bắt đầu chạy
-  const probe = buildGame({ at: screenOn, visible: gameAt, hold: XFADE });
-  const gameEnd = gameAt + probe.steps;
+  const probe = buildGame({ at: screenOn, visible: gameAt, hold: XFADE, levels: LEVELS });
+  const gameEnd = probe.endAt; // đã gồm nhịp đứng lại và mê cung nhấp nháy hết màn
   const cycle = gameEnd + XFADE + XBLACK + XFADE;
 
   snap(cycle - codeEnd, null);
@@ -242,7 +253,7 @@ function header() {
 
   /* --------------------------------- màn game: hạt đậu, pacman và ba con ma */
 
-  const gameFrames = [...game.dots, ...game.sprites, game.ready];
+  const gameFrames = [...game.dots, ...game.sprites, game.flash, game.ready, game.clear];
 
   /* ------------------------------- CSS: một @keyframes cho mỗi độ dài hiển thị */
 
@@ -311,13 +322,14 @@ function header() {
 
   const gameMarkup = [
     `  <g data-line="dots">`,
-    "    " + game.still.join(""),
     ...game.dots.map((f) => `    <g ${cls(f)}>${f.m}</g>`),
     `  </g>`,
     `  <g data-line="sprites">`,
     ...game.sprites.map((f) => `    <g ${cls(f)}>${f.m}</g>`),
     `  </g>`,
+    `  <g ${cls(game.flash)}>${game.flash.m}</g>`,
     `  <g ${cls(game.ready)}>${game.ready.m}</g>`,
+    `  <g ${cls(game.clear)}>${game.clear.m}</g>`,
   ].join("\n");
 
   // Hai lớp màn hình cross-fade vào nhau. Đây là chỗ DUY NHẤT dùng `linear`:
@@ -343,10 +355,12 @@ ${screens}
     @keyframes blink { 0%,55% { opacity:1 } 56%,100% { opacity:0 } }
     .pw { animation: pwb 0.36s steps(1,end) infinite }
     @keyframes pwb { 0%,62% { opacity:1 } 63%,100% { opacity:0 } }
+    .fl { animation: flash 0.72s steps(1,end) infinite }
+    @keyframes flash { 0%,49% { opacity:1 } 50%,100% { opacity:0 } }
     @media (prefers-reduced-motion: reduce) {
       .f { animation:none }
       .f.still { opacity:1 }
-      .bl .c, .pw { animation:none }
+      .bl .c, .pw, .fl { animation:none }
       .sc { animation:none; opacity:1 }
       .sg { animation:none; opacity:0 }
     }

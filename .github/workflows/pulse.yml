@@ -27,14 +27,28 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      # Lấy lịch sử contribution rồi dựng lại SVG để hạt đậu trong màn pacman
+      # đúng màu. Chỉ dựng lại khi dữ liệu thật sự đổi — header.svg to, không nên
+      # commit lại mỗi 6 tiếng dù chẳng có gì mới.
+      - name: Refresh contributions
+        run: node .github/scripts/contributions.mjs
+
+      - name: Rebuild assets if contributions changed
+        run: |
+          if git diff --quiet -- tools/contributions.json; then
+            echo "Lịch sử contribution không đổi, bỏ qua bước dựng lại."
+          else
+            node tools/build-assets.mjs
+          fi
+
       - name: Commit if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add README.md
+          git add README.md tools/contributions.json assets
           if git diff --cached --quiet; then
             echo "Không có thay đổi, bỏ qua commit."
           else
-            git commit -m "chore(pulse): refresh README status line"
+            git commit -m "chore(pulse): refresh status line and contribution colours"
             git push
           fi
