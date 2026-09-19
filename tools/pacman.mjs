@@ -25,9 +25,9 @@ const PAC_R = 9;
 export const CLEAR_PAUSE = 8; // đứng lại một nhịp sau khi ăn hạt cuối
 export const FLASH = 36; // mê cung nhấp nháy bao lâu để báo hết màn
 
-// 5 mức xanh của contribution graph (theme tối). Mức 0 nhấc sáng hơn GitHub một
-// chút, không thì hạt "ngày không commit" chìm hẳn vào nền card.
-const LEVELS = ["#1f2730", "#0e4429", "#006d32", "#26a641", "#39d353"];
+// Bốn mức xanh của contribution graph (theme tối). Mức 0 KHÔNG có hạt — ngày
+// không commit là một khoảng trống trên đường chạy, đúng như ô trắng trên graph.
+const LEVELS = [null, "#0e4429", "#006d32", "#26a641", "#39d353"];
 const FALLBACK = "#26a641"; // chưa có dữ liệu thì dùng một màu, không bịa mức
 
 const C = {
@@ -217,22 +217,37 @@ export function buildGame({ at, visible, hold, levels }) {
   const clearAt = lastStep + CLEAR_PAUSE; // ăn xong, đứng một nhịp rồi nhấp nháy
   const endAt = clearAt + FLASH;
 
-  /* --- hạt đậu: một hạt mỗi ô trên đường chạy, tất cả đều sẽ bị ăn --- */
-  // Hạt thứ i ứng với ngày thứ i tính từ cuối lịch sử, nên ăn từ cũ tới mới.
-  const tail = levels ? levels.slice(-cells.length) : null;
-  const dots = cells.map((cell, i) => {
+  /* --- hạt đậu: rải trên đường chạy nên hạt nào cũng sẽ bị ăn --- */
+  // Bốn hạt to ở góc là đồ chơi của game, không phải dữ liệu, nên không chiếm
+  // ngày. Các ô còn lại nhận lần lượt từng ngày tính ngược từ hôm nay, nên
+  // pacman ăn từ ngày cũ tới ngày mới. Ngày mức 0 thì bỏ trống, không vẽ hạt.
+  const dataCells = cells.filter((c) => !POWER.has(c.key));
+  const tail = levels ? levels.slice(-dataCells.length) : null;
+  const levelOf = new Map();
+  if (tail) {
+    const offset = dataCells.length - tail.length; // lịch sử ngắn hơn số ô thì chừa đầu đường
+    dataCells.forEach((c, i) => i >= offset && levelOf.set(c.key, tail[i - offset]));
+  }
+
+  const dots = [];
+  for (const cell of cells) {
     const big = POWER.has(cell.key);
-    const level = tail ? tail[i - (cells.length - tail.length)] : undefined;
-    const fill = level === undefined ? FALLBACK : LEVELS[Math.min(4, Math.max(0, level))];
+    let fill = FALLBACK;
+    if (big) fill = LEVELS[4];
+    else if (tail) {
+      const level = levelOf.get(cell.key);
+      if (!level) continue; // mức 0, hoặc ô không ứng với ngày nào -> để trống
+      fill = LEVELS[Math.min(4, level)];
+    }
     const x = cxOf(cell.c), y = cyOf(cell.r);
-    return {
+    dots.push({
       at,
       dur: visible + firstAt.get(cell.key) - at,
       m: big
         ? `<circle class="pw" cx="${x}" cy="${y}" r="5.5" fill="${fill}"/>`
         : `<circle cx="${x}" cy="${y}" r="2.5" fill="${fill}"/>`,
-    };
-  });
+    });
+  }
   if (dots.some((d) => d.dur <= 0)) throw new Error("có hạt tắt trước khi màn game hiện ra");
 
   /* --- pacman + ba con ma, mỗi bước một khung --- */
@@ -286,5 +301,5 @@ export function buildGame({ at, visible, hold, levels }) {
     m: plate(200) + `<text x="600" y="${ry + 7}" text-anchor="middle" font-size="20" font-weight="bold" fill="${C.clear}">LEVEL CLEAR</text>`,
   };
 
-  return { steps, cells: cells.length, dots, sprites, flash, ready, clear, endAt };
+  return { steps, cells: cells.length, days: tail?.length ?? 0, dots, sprites, flash, ready, clear, endAt };
 }

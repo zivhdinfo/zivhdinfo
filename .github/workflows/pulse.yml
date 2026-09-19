@@ -36,7 +36,10 @@ jobs:
 
       - name: Rebuild assets if contributions changed
         run: |
-          if git diff --quiet -- tools/contributions.json; then
+          # Dùng `git status --porcelain` chứ không phải `git diff`: lần chạy đầu
+          # file còn untracked, mà untracked thì không nằm trong diff nên
+          # `git diff --quiet` báo "không đổi" và bỏ qua mất bước dựng lại.
+          if [ -z "$(git status --porcelain -- tools/contributions.json)" ]; then
             echo "Lịch sử contribution không đổi, bỏ qua bước dựng lại."
           else
             node tools/build-assets.mjs
