@@ -19,6 +19,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # checkout mặc định clone nông (depth 1). Bước commit ở cuối có
+          # `git pull --rebase`, mà rebase trên clone nông thì gãy đúng lúc
+          # nhánh đã nhích — tức đúng lúc cần nó nhất.
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
