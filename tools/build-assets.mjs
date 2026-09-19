@@ -54,11 +54,8 @@ const ICONS = JSON.parse(await readFile(join(ROOT, "tools/icons.json"), "utf8"))
 // Lịch sử contribution để tô màu hạt đậu. File này do
 // .github/scripts/contributions.mjs sinh ra trong workflow — ở máy thường không
 // có cũng không sao, generator tự lùi về một màu xanh duy nhất chứ không bịa mức.
-const LEVELS = await readFile(join(ROOT, "tools/contributions.json"), "utf8").then(
-  (raw) => {
-    const days = JSON.parse(raw).days ?? [];
-    return days.length ? days.map((d) => d.level) : null;
-  },
+const DAYS = await readFile(join(ROOT, "tools/contributions.json"), "utf8").then(
+  (raw) => JSON.parse(raw).days?.length ? JSON.parse(raw).days : null,
   () => null
 );
 
@@ -217,7 +214,7 @@ function timeline() {
   const codeEnd = steps.reduce((a, s) => a + s.dur, 0);
   const screenOn = codeEnd + XFADE + XBLACK; // màn game bắt đầu ló ra
   const gameAt = screenOn + XFADE; // đã hiện đủ, pacman bắt đầu chạy
-  const probe = buildGame({ at: screenOn, visible: gameAt, hold: XFADE, levels: LEVELS });
+  const probe = buildGame({ at: screenOn, visible: gameAt, hold: XFADE, days: DAYS });
   const gameEnd = probe.endAt; // đã gồm nhịp đứng lại và mê cung nhấp nháy hết màn
   const cycle = gameEnd + XFADE + XBLACK + XFADE;
 

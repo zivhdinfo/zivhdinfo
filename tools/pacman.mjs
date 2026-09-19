@@ -5,13 +5,16 @@
 // con ma của cùng một bước nằm CHUNG một khung — vừa gọn hơn bốn chuỗi khung
 // riêng, vừa không đời nào lệch nhịp nhau.
 //
-// Hạt đậu KHÔNG nằm trong bản vẽ mê cung mà được rải theo đúng đường chạy. Nhờ
-// vậy Pac-Man ăn hết 100% hạt, màn chơi kết thúc thật (mê cung nhấp nháy kiểu
-// "level clear") thay vì bị fade cắt ngang giữa chừng.
+// Hạt KHÔNG nằm trong bản vẽ mê cung mà được rải theo đúng đường chạy của
+// pacman. Nhờ vậy pacman ăn hết 100% hạt, màn chơi kết thúc thật thay vì bị fade
+// cắt ngang. Hệ quả: đường chạy của pacman KHÔNG thể ngẫu nhiên hoàn toàn, vì
+// ngẫu nhiên thì không quét hết. Nó là đường rắn bò có chèn những cú nhô lên /
+// thụt xuống ngẫu nhiên — trông đỡ máy móc mà vẫn phủ kín. Ma thì tự do lang
+// thang thật, vì chúng không phải ăn gì.
 //
-// Màu hạt lấy từ lịch sử contribution nếu có tools/contributions.json, theo đúng
-// 5 mức xanh của GitHub. Hạt xếp theo thứ tự đường chạy = thứ tự thời gian, nên
-// Pac-Man ăn dần từ ngày cũ tới ngày mới.
+// Mọi thứ "ngẫu nhiên" đều chạy qua một PRNG seed cố định. Build phải lặp lại
+// cho ra đúng một kết quả, không thì mỗi lần workflow chạy lại đẻ ra một
+// header.svg khác và commit vô nghĩa.
 
 const T = 20; // cạnh một ô mê cung
 const COLS = 56;
@@ -19,14 +22,17 @@ const MX = 40; // mê cung đặt ở đâu trong card 1200x280
 const MY = 30;
 
 export const STEP_PX = 14; // mỗi bước pacman dịch bao nhiêu px
+const GHOST_SPEED = [12.5, 14, 15.5]; // ma đi nhanh chậm khác nhau cho khỏi đều như một
 const FRIGHT = 45; // ăn một hạt to thì ma sợ bao nhiêu bước
-const TRAILS = [16, 30, 44]; // ba con ma bám sau pacman bao nhiêu bước
+const DETOUR_P = 0.09; // xác suất pacman nhô ra khỏi hành lang ở mỗi ô
+const STRAIGHT_P = 0.62; // ma thích đi thẳng cỡ nào, còn lại là rẽ
+const SEED = 20260919;
 const PAC_R = 9;
 export const CLEAR_PAUSE = 8; // đứng lại một nhịp sau khi ăn hạt cuối
 export const FLASH = 36; // mê cung nhấp nháy bao lâu để báo hết màn
 
 // Bốn mức xanh của contribution graph (theme tối). Mức 0 KHÔNG có hạt — ngày
-// không commit là một khoảng trống trên đường chạy, đúng như ô trắng trên graph.
+// không commit là một khoảng trống, đúng như ô trắng trên graph.
 const LEVELS = [null, "#0e4429", "#006d32", "#26a641", "#39d353"];
 const FALLBACK = "#26a641"; // chưa có dữ liệu thì dùng một màu, không bịa mức
 
@@ -68,22 +74,30 @@ export const MAZE = HALF.map((h, i) => {
   return h + [...h].reverse().join("");
 });
 
+const ROWS = MAZE.length;
 const cxOf = (c) => MX + c * T + T / 2;
 const cyOf = (r) => MY + r * T + T / 2;
+const open = (r, c) => r >= 0 && r < ROWS && c >= 0 && c < COLS && MAZE[r][c] !== "#";
 
-// Đường chạy rắn bò: quét hết năm hành lang ngang, nối bằng bốn đoạn dọc. Hạt
-// rải đúng theo đường này nên ăn hết là sạch màn.
-const ROUTE = [
-  [1, 1], [1, 54], [3, 54], [3, 1], [5, 1],
-  [5, 54], [7, 54], [7, 1], [9, 1], [9, 54],
-];
-
-// Hạt to ở bốn góc — cả bốn đều nằm trên đường chạy nên đều được ăn.
+const CORRIDORS = [1, 3, 5, 7, 9]; // các hàng thông suốt từ trái sang phải
+// Hạt to ở bốn góc — cả bốn đều nằm trên đường rắn bò nên đều được ăn.
 const POWER = new Set(["1,1", "1,54", "9,1", "9,54"]);
 
 /* ----------------------------------------------------------------- tiện ích */
 
 const n2 = (n) => Number(n.toFixed(2));
+
+// mulberry32 — nhỏ, đủ tốt, và quan trọng nhất là lặp lại được.
+function makeRng(seed) {
+  let a = seed >>> 0;
+  return () => {
+    a = (a + 0x6d2b79f5) >>> 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+const pick = (arr, rand) => arr[Math.floor(rand() * arr.length)];
 
 // Hình pacman: đường tròn bán kính PAC_R khuyết một góc mồm mở về bên phải.
 // large-arc=1 sweep=0 để đi vòng dài, ngược chiều kim đồng hồ trên màn hình.
@@ -123,7 +137,7 @@ export const DEFS = [
 // thay vì vài trăm, và trông đúng kiểu thanh ngang của mê cung gốc.
 function bars(stroke) {
   const out = [];
-  for (let r = 1; r < MAZE.length - 1; r++) {
+  for (let r = 1; r < ROWS - 1; r++) {
     let run = 0;
     for (let c = 1; c <= COLS - 1; c++) {
       const wall = c < COLS - 1 && MAZE[r][c] === "#";
@@ -137,7 +151,7 @@ function bars(stroke) {
     }
   }
   return (
-    `<rect x="${MX + 6}" y="${MY + 6}" width="${COLS * T - 12}" height="${MAZE.length * T - 12}" rx="12" fill="none" stroke="${stroke}" stroke-width="2.5"/>` +
+    `<rect x="${MX + 6}" y="${MY + 6}" width="${COLS * T - 12}" height="${ROWS * T - 12}" rx="12" fill="none" stroke="${stroke}" stroke-width="2.5"/>` +
     out.join("")
   );
 }
@@ -145,50 +159,84 @@ function bars(stroke) {
 export const mazeMarkup = () => bars(C.wall);
 export const mazeFlash = () => bars(C.flash);
 
-/* ---------------------------------------------------- đường chạy của pacman */
+/* ------------------------------------------------------------ đường đi */
 
-function walk() {
-  const segs = [];
-  let total = 0;
-  for (let i = 0; i < ROUTE.length - 1; i++) {
-    const [r0, c0] = ROUTE[i];
-    const [r1, c1] = ROUTE[i + 1];
-    const x0 = cxOf(c0), y0 = cyOf(r0);
-    const dx = cxOf(c1) - x0, dy = cyOf(r1) - y0;
-    const len = Math.hypot(dx, dy);
-    if (!len) continue;
-    if (dx && dy) throw new Error(`đoạn ${i} đi chéo, mê cung chỉ có ngang và dọc`);
-    segs.push({ x0, y0, ux: dx / len, uy: dy / len, len, at: total });
-    total += len;
-  }
-
-  const pts = [];
-  for (let d = 0; d <= total; d += STEP_PX) {
-    const seg = segs.find((s) => d <= s.at + s.len) ?? segs[segs.length - 1];
-    const k = d - seg.at;
-    const x = seg.x0 + seg.ux * k;
-    const y = seg.y0 + seg.uy * k;
-    const deg = seg.ux > 0 ? 0 : seg.ux < 0 ? 180 : seg.uy > 0 ? 90 : 270;
-    const c = Math.round((x - MX - T / 2) / T);
-    const r = Math.round((y - MY - T / 2) / T);
-    if (MAZE[r][c] === "#") throw new Error(`đường chạy đâm vào tường ở ô [${r},${c}]`);
-    pts.push({ x: n2(x), y: n2(y), deg, r, c });
-  }
-  return pts;
+// Đường của pacman: quét lần lượt năm hành lang, đổi chiều mỗi hàng, thỉnh
+// thoảng nhô ra ô tường liền kề rồi quay lại. Cú nhô đó chỉ THÊM ô chứ không bỏ
+// ô nào, nên tính "quét hết hạt" vẫn còn nguyên.
+function pacCells(rand) {
+  const cells = [];
+  let dir = 1;
+  CORRIDORS.forEach((r, i) => {
+    const from = dir === 1 ? 1 : COLS - 2;
+    const to = dir === 1 ? COLS - 2 : 1;
+    for (let c = from; dir === 1 ? c <= to : c >= to; c += dir) {
+      cells.push([r, c]);
+      if (c !== from && c !== to && rand() < DETOUR_P) {
+        const opts = [r - 1, r + 1].filter((rr) => open(rr, c));
+        if (opts.length) {
+          const rr = pick(opts, rand);
+          cells.push([rr, c], [r, c]); // nhô ra rồi lùi về đúng chỗ cũ
+        }
+      }
+    }
+    if (i < CORRIDORS.length - 1) cells.push([r + 1, to], [r + 2, to]); // xuống hành lang kế
+    dir *= -1;
+  });
+  return cells;
 }
 
-// Mọi ô nằm trên đường chạy, theo đúng thứ tự đi qua. Đây vừa là chỗ đặt hạt,
-// vừa là trục thời gian để gắn lịch sử contribution vào.
-function routeCells(pts) {
-  const seen = new Set();
-  const cells = [];
-  for (const p of pts) {
-    const key = `${p.r},${p.c}`;
-    if (seen.has(key)) continue;
-    seen.add(key);
-    cells.push({ ...p, key });
+// Đường của ma: lang thang thật. Ở mỗi ô chọn hướng trong số các hướng mở, bỏ
+// hướng quay đầu (trừ khi cụt), thiên về đi thẳng cho đỡ giật.
+const DIRS = [[0, 1], [0, -1], [1, 0], [-1, 0]];
+function ghostCells(start, dir0, n, rand) {
+  let [r, c] = start;
+  let d = dir0;
+  const cells = [[r, c]];
+  for (let i = 0; i < n; i++) {
+    const opts = DIRS.filter(([dr, dc]) => open(r + dr, c + dc));
+    const noBack = opts.filter(([dr, dc]) => !(dr === -d[0] && dc === -d[1]));
+    const from = noBack.length ? noBack : opts;
+    const straight = from.find(([dr, dc]) => dr === d[0] && dc === d[1]);
+    d = straight && rand() < STRAIGHT_P ? straight : pick(from, rand);
+    r += d[0];
+    c += d[1];
+    cells.push([r, c]);
   }
   return cells;
+}
+
+// Biến danh sách ô thành các đoạn thẳng, rồi lấy điểm tại một quãng đường bất kỳ.
+function toSegments(cells, who) {
+  const segs = [];
+  let total = 0;
+  for (let i = 0; i < cells.length - 1; i++) {
+    const [r0, c0] = cells[i];
+    const [r1, c1] = cells[i + 1];
+    if (r0 === r1 && c0 === c1) continue;
+    if (r0 !== r1 && c0 !== c1) throw new Error(`${who}: đoạn ${i} đi chéo`);
+    if (!open(r1, c1)) throw new Error(`${who}: đi vào tường ở ô [${r1},${c1}]`);
+    const x0 = cxOf(c0), y0 = cyOf(r0);
+    const len = Math.hypot(cxOf(c1) - x0, cyOf(r1) - y0);
+    segs.push({ x0, y0, ux: (cxOf(c1) - x0) / len, uy: (cyOf(r1) - y0) / len, len, at: total });
+    total += len;
+  }
+  return { segs, total };
+}
+
+function pointAt({ segs, total }, dist) {
+  const d = Math.min(dist, total);
+  const seg = segs.find((s) => d <= s.at + s.len) ?? segs[segs.length - 1];
+  const k = d - seg.at;
+  const x = seg.x0 + seg.ux * k;
+  const y = seg.y0 + seg.uy * k;
+  return {
+    x: n2(x),
+    y: n2(y),
+    deg: seg.ux > 0 ? 0 : seg.ux < 0 ? 180 : seg.uy > 0 ? 90 : 270,
+    r: Math.round((y - MY - T / 2) / T),
+    c: Math.round((x - MX - T / 2) / T),
+  };
 }
 
 /* ------------------------------------------------------------------- dựng */
@@ -196,56 +244,77 @@ function routeCells(pts) {
 // at      = slice màn game bắt đầu ló ra
 // visible = slice màn game hiện đủ, pacman bắt đầu chạy
 // hold    = số slice giữ thêm sau khi hết màn (để fade ra)
-// levels  = mảng mức contribution 0..4 theo ngày, cũ -> mới; null thì dùng một màu
-export function buildGame({ at, visible, hold, levels }) {
-  const pts = walk();
-  const steps = pts.length;
-  const cells = routeCells(pts);
+// days    = [{level, count}] theo ngày, cũ -> mới; null thì dùng một màu
+export function buildGame({ at, visible, hold, days }) {
+  const rand = makeRng(SEED);
+  const pacTrack = toSegments(pacCells(rand), "pacman");
+  const steps = Math.ceil(pacTrack.total / STEP_PX) + 1;
 
-  // Ô nào bị đi qua ở bước nào.
-  const firstAt = new Map();
-  pts.forEach((p, s) => {
-    const key = `${p.r},${p.c}`;
-    if (!firstAt.has(key)) firstAt.set(key, s);
+  const pts = Array.from({ length: steps }, (_, s) => pointAt(pacTrack, s * STEP_PX));
+
+  // Ma: mỗi con một điểm xuất phát, một hướng, một tốc độ riêng -> chúng đến từ
+  // nhiều phía chứ không xếp hàng sau lưng pacman như trước.
+  const starts = [
+    [[5, 14], [0, 1]],
+    [[5, 41], [0, -1]],
+    [[7, 27], [-1, 0]],
+  ];
+  const ghostTracks = starts.map(([start, dir], i) => {
+    const need = Math.ceil((steps * GHOST_SPEED[i]) / T) + 4;
+    const track = toSegments(ghostCells(start, dir, need, rand), `ma ${i}`);
+    if (track.total < steps * GHOST_SPEED[i])
+      throw new Error(`ma ${i} hết đường trước khi hết màn`);
+    return track;
   });
 
-  // Ăn hạt to -> ma chuyển sang sợ trong FRIGHT bước.
+  // Ô nào pacman đi qua ở bước nào.
+  const firstAt = new Map();
+  const cells = [];
+  pts.forEach((p, s) => {
+    const key = `${p.r},${p.c}`;
+    if (firstAt.has(key)) return;
+    firstAt.set(key, s);
+    cells.push({ ...p, key });
+  });
+
   const frightFrom = cells.filter((c) => POWER.has(c.key)).map((c) => firstAt.get(c.key));
   const scared = (s) => frightFrom.some((f) => s >= f && s < f + FRIGHT);
 
   const lastStep = visible + steps - 1;
-  const clearAt = lastStep + CLEAR_PAUSE; // ăn xong, đứng một nhịp rồi nhấp nháy
+  const clearAt = lastStep + CLEAR_PAUSE;
   const endAt = clearAt + FLASH;
 
-  /* --- hạt đậu: rải trên đường chạy nên hạt nào cũng sẽ bị ăn --- */
+  /* --- hạt: khối vuông, rải trên đường chạy nên hạt nào cũng sẽ bị ăn --- */
   // Bốn hạt to ở góc là đồ chơi của game, không phải dữ liệu, nên không chiếm
-  // ngày. Các ô còn lại nhận lần lượt từng ngày tính ngược từ hôm nay, nên
-  // pacman ăn từ ngày cũ tới ngày mới. Ngày mức 0 thì bỏ trống, không vẽ hạt.
+  // ngày. Các ô còn lại nhận lần lượt từng ngày tính ngược từ hôm nay.
   const dataCells = cells.filter((c) => !POWER.has(c.key));
-  const tail = levels ? levels.slice(-dataCells.length) : null;
-  const levelOf = new Map();
+  const tail = days ? days.slice(-dataCells.length) : null;
+  const dayOf = new Map();
   if (tail) {
     const offset = dataCells.length - tail.length; // lịch sử ngắn hơn số ô thì chừa đầu đường
-    dataCells.forEach((c, i) => i >= offset && levelOf.set(c.key, tail[i - offset]));
+    dataCells.forEach((c, i) => i >= offset && dayOf.set(c.key, tail[i - offset]));
   }
 
+  const box = (x, y, side, rx, fill, cls) =>
+    `<rect${cls ? ` class="${cls}"` : ""} x="${n2(x - side / 2)}" y="${n2(y - side / 2)}" width="${side}" height="${side}" rx="${rx}" fill="${fill}"/>`;
+
   const dots = [];
+  let ate = 0;
   for (const cell of cells) {
     const big = POWER.has(cell.key);
     let fill = FALLBACK;
     if (big) fill = LEVELS[4];
     else if (tail) {
-      const level = levelOf.get(cell.key);
-      if (!level) continue; // mức 0, hoặc ô không ứng với ngày nào -> để trống
-      fill = LEVELS[Math.min(4, level)];
+      const day = dayOf.get(cell.key);
+      if (!day?.level) continue; // mức 0, hoặc ô không ứng với ngày nào -> để trống
+      fill = LEVELS[Math.min(4, day.level)];
+      ate += day.count ?? 0;
     }
     const x = cxOf(cell.c), y = cyOf(cell.r);
     dots.push({
       at,
       dur: visible + firstAt.get(cell.key) - at,
-      m: big
-        ? `<circle class="pw" cx="${x}" cy="${y}" r="5.5" fill="${fill}"/>`
-        : `<circle cx="${x}" cy="${y}" r="2.5" fill="${fill}"/>`,
+      m: big ? box(x, y, 11, 2, fill, "pw") : box(x, y, 5, 1, fill),
     });
   }
   if (dots.some((d) => d.dur <= 0)) throw new Error("có hạt tắt trước khi màn game hiện ra");
@@ -257,9 +326,8 @@ export function buildGame({ at, visible, hold, levels }) {
     const parts = [
       `<use href="#${s % 4 < 2 ? "po" : "pc"}" transform="translate(${p.x},${p.y}) rotate(${p.deg})"/>`,
     ];
-    TRAILS.forEach((trail, i) => {
-      const g = pts[s - trail];
-      if (!g) return;
+    ghostTracks.forEach((track, i) => {
+      const g = pointAt(track, s * GHOST_SPEED[i]);
       const flip = g.deg === 180 ? " scale(-1,1)" : "";
       parts.push(
         `<use href="#${scared(s) ? "gf" : `g${i}`}" transform="translate(${g.x},${g.y})${flip}"/>`
@@ -281,25 +349,26 @@ export function buildGame({ at, visible, hold, levels }) {
     m: `<use href="#pc" transform="translate(${last.x},${last.y}) rotate(${last.deg})"/>`,
   });
 
-  // Mê cung trắng chồng lên bản xanh, nhấp nháy bằng animation riêng bên trong.
-  const flash = {
-    at: clearAt,
-    dur: FLASH,
-    m: `<g class="fl">${mazeFlash()}</g>`,
-  };
+  const flash = { at: clearAt, dur: FLASH, m: `<g class="fl">${mazeFlash()}</g>` };
 
+  /* --- hai tấm chữ --- */
   const ry = cyOf(5);
-  const plate = (w) => `<rect x="${600 - w / 2}" y="${ry - 14}" width="${w}" height="28" rx="6" fill="#09090b"/>`;
-  const ready = {
-    at,
-    dur: Math.min(28, visible - at + 20),
-    m: plate(108) + `<text x="600" y="${ry + 7}" text-anchor="middle" font-size="20" font-weight="bold" fill="${C.ready}">READY!</text>`,
-  };
-  const clear = {
-    at: clearAt,
-    dur: FLASH + hold,
-    m: plate(200) + `<text x="600" y="${ry + 7}" text-anchor="middle" font-size="20" font-weight="bold" fill="${C.clear}">LEVEL CLEAR</text>`,
+  const FS = 20;
+  const CH = FS * 0.6;
+  const plate = (text, fill) => {
+    const w = n2(text.length * CH + 30);
+    return (
+      `<rect x="${n2(600 - w / 2)}" y="${ry - 15}" width="${w}" height="30" rx="6" fill="#09090b"/>` +
+      `<text x="600" y="${ry + 7}" text-anchor="middle" textLength="${n2(text.length * CH)}" font-size="${FS}" font-weight="bold" fill="${fill}">${text}</text>`
+    );
   };
 
-  return { steps, cells: cells.length, days: tail?.length ?? 0, dots, sprites, flash, ready, clear, endAt };
+  const clearText = tail ? `ATE ${ate} CONTRIBUTIONS` : "LEVEL CLEAR";
+  const ready = { at, dur: Math.min(28, visible - at + 20), m: plate("READY!", C.ready) };
+  const clear = { at: clearAt, dur: FLASH + hold, m: plate(clearText, C.clear) };
+
+  return {
+    steps, cells: cells.length, days: tail?.length ?? 0, ate, clearText,
+    dots, sprites, flash, ready, clear, endAt,
+  };
 }
