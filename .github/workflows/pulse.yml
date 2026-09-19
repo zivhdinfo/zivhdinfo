@@ -2,7 +2,9 @@ name: pulse
 
 on:
   schedule:
-    - cron: "0 */6 * * *"
+    # Lệch khỏi phút 0: đúng đầu giờ là lúc hàng đợi Actions đông nhất và lịch
+    # chạy hay bị trễ hàng chục phút. Phút lẻ thì chạy sát giờ hơn nhiều.
+    - cron: "37 */6 * * *"
   workflow_dispatch:
 
 permissions:
@@ -54,5 +56,8 @@ jobs:
             echo "Không có thay đổi, bỏ qua commit."
           else
             git commit -m "chore(pulse): refresh status line and contribution colours"
-            git push
+            # Nhánh có thể đã nhích lên kể từ lúc checkout; rebase rồi hẵng đẩy,
+            # không thì cả lần chạy này mất trắng vì push bị từ chối.
+            git pull --rebase origin "${GITHUB_REF_NAME}"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
           fi
