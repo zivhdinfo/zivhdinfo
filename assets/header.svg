@@ -1,37 +1,93 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 280" width="1200" height="280" role="img" aria-label="const zivhd = { web: [&quot;vue&quot;, &quot;react&quot;, &quot;typescript&quot;]; api: [&quot;laravel&quot;, &quot;adonis&quot;, &quot;nestjs&quot;]; rule: &quot;types first, then the feature&quot; }">
   <title>zivhd — stack</title>
   <style>
-    .f { opacity:0; animation:47.7s step-end infinite }
+    .f { opacity:0; animation:55.02s step-end infinite }
     .t1 { animation-name:t1 }
-    @keyframes t1 { 0% { opacity:1 } 0.1258% { opacity:0 } }
+    @keyframes t1 { 0% { opacity:1 } 0.1091% { opacity:0 } }
     .t2 { animation-name:t2 }
-    @keyframes t2 { 0% { opacity:1 } 0.2516% { opacity:0 } }
+    @keyframes t2 { 0% { opacity:1 } 0.2181% { opacity:0 } }
     .t4 { animation-name:t4 }
-    @keyframes t4 { 0% { opacity:1 } 0.5031% { opacity:0 } }
+    @keyframes t4 { 0% { opacity:1 } 0.4362% { opacity:0 } }
+    .t8 { animation-name:t8 }
+    @keyframes t8 { 0% { opacity:1 } 0.8724% { opacity:0 } }
     .t11 { animation-name:t11 }
-    @keyframes t11 { 0% { opacity:1 } 1.3836% { opacity:0 } }
+    @keyframes t11 { 0% { opacity:1 } 1.1996% { opacity:0 } }
+    .t14 { animation-name:t14 }
+    @keyframes t14 { 0% { opacity:1 } 1.5267% { opacity:0 } }
+    .t17 { animation-name:t17 }
+    @keyframes t17 { 0% { opacity:1 } 1.8539% { opacity:0 } }
     .t18 { animation-name:t18 }
-    @keyframes t18 { 0% { opacity:1 } 2.2642% { opacity:0 } }
+    @keyframes t18 { 0% { opacity:1 } 1.9629% { opacity:0 } }
+    .t20 { animation-name:t20 }
+    @keyframes t20 { 0% { opacity:1 } 2.181% { opacity:0 } }
+    .t23 { animation-name:t23 }
+    @keyframes t23 { 0% { opacity:1 } 2.5082% { opacity:0 } }
+    .t26 { animation-name:t26 }
+    @keyframes t26 { 0% { opacity:1 } 2.8353% { opacity:0 } }
+    .t29 { animation-name:t29 }
+    @keyframes t29 { 0% { opacity:1 } 3.1625% { opacity:0 } }
+    .t32 { animation-name:t32 }
+    @keyframes t32 { 0% { opacity:1 } 3.4896% { opacity:0 } }
+    .t35 { animation-name:t35 }
+    @keyframes t35 { 0% { opacity:1 } 3.8168% { opacity:0 } }
+    .t38 { animation-name:t38 }
+    @keyframes t38 { 0% { opacity:1 } 4.1439% { opacity:0 } }
+    .t41 { animation-name:t41 }
+    @keyframes t41 { 0% { opacity:1 } 4.4711% { opacity:0 } }
+    .t45 { animation-name:t45 }
+    @keyframes t45 { 0% { opacity:1 } 4.9073% { opacity:0 } }
+    .t48 { animation-name:t48 }
+    @keyframes t48 { 0% { opacity:1 } 5.2345% { opacity:0 } }
+    .t51 { animation-name:t51 }
+    @keyframes t51 { 0% { opacity:1 } 5.5616% { opacity:0 } }
+    .t54 { animation-name:t54 }
+    @keyframes t54 { 0% { opacity:1 } 5.8888% { opacity:0 } }
+    .t57 { animation-name:t57 }
+    @keyframes t57 { 0% { opacity:1 } 6.2159% { opacity:0 } }
+    .t60 { animation-name:t60 }
+    @keyframes t60 { 0% { opacity:1 } 6.5431% { opacity:0 } }
+    .t63 { animation-name:t63 }
+    @keyframes t63 { 0% { opacity:1 } 6.8702% { opacity:0 } }
+    .t66 { animation-name:t66 }
+    @keyframes t66 { 0% { opacity:1 } 7.1974% { opacity:0 } }
+    .t69 { animation-name:t69 }
+    @keyframes t69 { 0% { opacity:1 } 7.5245% { opacity:0 } }
+    .t72 { animation-name:t72 }
+    @keyframes t72 { 0% { opacity:1 } 7.8517% { opacity:0 } }
+    .t75 { animation-name:t75 }
+    @keyframes t75 { 0% { opacity:1 } 8.1788% { opacity:0 } }
+    .t78 { animation-name:t78 }
+    @keyframes t78 { 0% { opacity:1 } 8.506% { opacity:0 } }
+    .t82 { animation-name:t82 }
+    @keyframes t82 { 0% { opacity:1 } 8.9422% { opacity:0 } }
+    .t85 { animation-name:t85 }
+    @keyframes t85 { 0% { opacity:1 } 9.2694% { opacity:0 } }
+    .t88 { animation-name:t88 }
+    @keyframes t88 { 0% { opacity:1 } 9.5965% { opacity:0 } }
     .t90 { animation-name:t90 }
-    @keyframes t90 { 0% { opacity:1 } 11.3208% { opacity:0 } }
-    .t109 { animation-name:t109 }
-    @keyframes t109 { 0% { opacity:1 } 13.7107% { opacity:0 } }
+    @keyframes t90 { 0% { opacity:1 } 9.8146% { opacity:0 } }
+    .t91 { animation-name:t91 }
+    @keyframes t91 { 0% { opacity:1 } 9.9237% { opacity:0 } }
+    .t140 { animation-name:t140 }
+    @keyframes t140 { 0% { opacity:1 } 15.2672% { opacity:0 } }
     .t181 { animation-name:t181 }
-    @keyframes t181 { 0% { opacity:1 } 22.7673% { opacity:0 } }
+    @keyframes t181 { 0% { opacity:1 } 19.7383% { opacity:0 } }
     .t185 { animation-name:t185 }
-    @keyframes t185 { 0% { opacity:1 } 23.2704% { opacity:0 } }
+    @keyframes t185 { 0% { opacity:1 } 20.1745% { opacity:0 } }
     .t189 { animation-name:t189 }
-    @keyframes t189 { 0% { opacity:1 } 23.7736% { opacity:0 } }
+    @keyframes t189 { 0% { opacity:1 } 20.6107% { opacity:0 } }
     .t192 { animation-name:t192 }
-    @keyframes t192 { 0% { opacity:1 } 24.1509% { opacity:0 } }
+    @keyframes t192 { 0% { opacity:1 } 20.9378% { opacity:0 } }
     .t193 { animation-name:t193 }
-    @keyframes t193 { 0% { opacity:1 } 24.2767% { opacity:0 } }
+    @keyframes t193 { 0% { opacity:1 } 21.0469% { opacity:0 } }
     .t196 { animation-name:t196 }
-    @keyframes t196 { 0% { opacity:1 } 24.6541% { opacity:0 } }
+    @keyframes t196 { 0% { opacity:1 } 21.374% { opacity:0 } }
     .t199 { animation-name:t199 }
-    @keyframes t199 { 0% { opacity:1 } 25.0314% { opacity:0 } }
-    .t200 { animation-name:t200 }
-    @keyframes t200 { 0% { opacity:1 } 25.1572% { opacity:0 } }
+    @keyframes t199 { 0% { opacity:1 } 21.7012% { opacity:0 } }
+    .t231 { animation-name:t231 }
+    @keyframes t231 { 0% { opacity:1 } 25.1908% { opacity:0 } }
+    .t322 { animation-name:t322 }
+    @keyframes t322 { 0% { opacity:1 } 35.1145% { opacity:0 } }
     .bl .c { animation: blink 1.06s steps(1,end) infinite }
     @keyframes blink { 0%,55% { opacity:1 } 56%,100% { opacity:0 } }
     @media (prefers-reduced-motion: reduce) {
@@ -40,9 +96,252 @@
       .bl .c { animation:none }
     }
   </style>
+  <defs>
+    <path id="po" d="M0,0L7.55,-4.9A9,9 0 1 0 7.55,4.9Z" fill="#f7df1e"/>
+    <path id="pc" d="M0,0L8.98,-0.63A9,9 0 1 0 8.98,0.63Z" fill="#f7df1e"/>
+    <g id="gh">
+      <path d="M-8,7V-1A8,8 0 0 1 8,-1V7q-2,4.5 -4,0q-2,4.5 -4,0q-2,4.5 -4,0q-2,4.5 -4,0Z" fill="#ff7b72"/>
+      <circle cx="-3.4" cy="-2" r="2.4" fill="#e6edf3"/>
+      <circle cx="3.4" cy="-2" r="2.4" fill="#e6edf3"/>
+      <circle cx="-2.6" cy="-2" r="1.2" fill="#09090b"/>
+      <circle cx="4.2" cy="-2" r="1.2" fill="#09090b"/>
+    </g>
+  </defs>
 
   <rect x="0.75" y="0.75" width="1198.5" height="278.5" rx="16" fill="#141417" stroke="#27272a"/>
   <rect x="8.75" y="8.75" width="1182.5" height="262.5" rx="12" fill="#09090b" stroke="#232326"/>
+
+  <g data-line="dots">
+    <g class="f t4" style="animation-delay:47.7s"><circle cx="68" cy="253" r="2.5" fill="#3f4654"/></g>
+    <g class="f t8" style="animation-delay:47.7s"><circle cx="105" cy="253" r="2.5" fill="#3f4654"/></g>
+    <g class="f t11" style="animation-delay:47.7s"><circle cx="142" cy="253" r="2.5" fill="#3f4654"/></g>
+    <g class="f t14" style="animation-delay:47.7s"><circle cx="179" cy="253" r="2.5" fill="#3f4654"/></g>
+    <g class="f t17" style="animation-delay:47.7s"><circle cx="216" cy="253" r="2.5" fill="#3f4654"/></g>
+    <g class="f t20" style="animation-delay:47.7s"><circle cx="253" cy="253" r="2.5" fill="#3f4654"/></g>
+    <g class="f t23" style="animation-delay:47.7s"><circle cx="290" cy="253" r="2.5" fill="#3f4654"/></g>
+    <g class="f t26" style="animation-delay:47.7s"><circle cx="327" cy="253" r="2.5" fill="#3f4654"/></g>
+    <g class="f t29" style="animation-delay:47.7s"><circle cx="364" cy="253" r="2.5" fill="#3f4654"/></g>
+    <g class="f t32" style="animation-delay:47.7s"><circle cx="401" cy="253" r="2.5" fill="#3f4654"/></g>
+    <g class="f t35" style="animation-delay:47.7s"><circle cx="438" cy="253" r="2.5" fill="#3f4654"/></g>
+    <g class="f t38" style="animation-delay:47.7s"><circle cx="475" cy="253" r="2.5" fill="#3f4654"/></g>
+    <g class="f t41" style="animation-delay:47.7s"><circle cx="512" cy="253" r="2.5" fill="#3f4654"/></g>
+    <g class="f t45" style="animation-delay:47.7s"><circle cx="549" cy="253" r="2.5" fill="#3f4654"/></g>
+    <g class="f t48" style="animation-delay:47.7s"><circle cx="586" cy="253" r="2.5" fill="#3f4654"/></g>
+    <g class="f t51" style="animation-delay:47.7s"><circle cx="623" cy="253" r="2.5" fill="#3f4654"/></g>
+    <g class="f t54" style="animation-delay:47.7s"><circle cx="660" cy="253" r="2.5" fill="#3f4654"/></g>
+    <g class="f t57" style="animation-delay:47.7s"><circle cx="697" cy="253" r="2.5" fill="#3f4654"/></g>
+    <g class="f t60" style="animation-delay:47.7s"><circle cx="734" cy="253" r="2.5" fill="#3f4654"/></g>
+    <g class="f t63" style="animation-delay:47.7s"><circle cx="771" cy="253" r="2.5" fill="#3f4654"/></g>
+    <g class="f t66" style="animation-delay:47.7s"><circle cx="808" cy="253" r="2.5" fill="#3f4654"/></g>
+    <g class="f t69" style="animation-delay:47.7s"><circle cx="845" cy="253" r="2.5" fill="#3f4654"/></g>
+    <g class="f t72" style="animation-delay:47.7s"><circle cx="882" cy="253" r="2.5" fill="#3f4654"/></g>
+    <g class="f t75" style="animation-delay:47.7s"><circle cx="919" cy="253" r="2.5" fill="#3f4654"/></g>
+    <g class="f t78" style="animation-delay:47.7s"><circle cx="956" cy="253" r="2.5" fill="#3f4654"/></g>
+    <g class="f t82" style="animation-delay:47.7s"><circle cx="993" cy="253" r="2.5" fill="#3f4654"/></g>
+    <g class="f t85" style="animation-delay:47.7s"><circle cx="1030" cy="253" r="2.5" fill="#3f4654"/></g>
+    <g class="f t88" style="animation-delay:47.7s"><circle cx="1067" cy="253" r="2.5" fill="#3f4654"/></g>
+    <g class="f t91" style="animation-delay:47.7s"><circle cx="1104" cy="253" r="2.5" fill="#3f4654"/></g>
+  </g>
+  <g data-line="pac">
+    <g class="f t1" style="animation-delay:47.7s"><use href="#po" x="20" y="253"/></g>
+    <g class="f t1" style="animation-delay:47.76s"><use href="#po" x="32" y="253"/></g>
+    <g class="f t1" style="animation-delay:47.82s"><use href="#pc" x="44" y="253"/></g>
+    <g class="f t1" style="animation-delay:47.88s"><use href="#pc" x="56" y="253"/></g>
+    <g class="f t1" style="animation-delay:47.94s"><use href="#po" x="68" y="253"/></g>
+    <g class="f t1" style="animation-delay:48s"><use href="#po" x="80" y="253"/></g>
+    <g class="f t1" style="animation-delay:48.06s"><use href="#pc" x="92" y="253"/></g>
+    <g class="f t1" style="animation-delay:48.12s"><use href="#pc" x="104" y="253"/></g>
+    <g class="f t1" style="animation-delay:48.18s"><use href="#po" x="116" y="253"/></g>
+    <g class="f t1" style="animation-delay:48.24s"><use href="#po" x="128" y="253"/></g>
+    <g class="f t1" style="animation-delay:48.3s"><use href="#pc" x="140" y="253"/></g>
+    <g class="f t1" style="animation-delay:48.36s"><use href="#pc" x="152" y="253"/></g>
+    <g class="f t1" style="animation-delay:48.42s"><use href="#po" x="164" y="253"/></g>
+    <g class="f t1" style="animation-delay:48.48s"><use href="#po" x="176" y="253"/></g>
+    <g class="f t1" style="animation-delay:48.54s"><use href="#pc" x="188" y="253"/></g>
+    <g class="f t1" style="animation-delay:48.6s"><use href="#pc" x="200" y="253"/></g>
+    <g class="f t1" style="animation-delay:48.66s"><use href="#po" x="212" y="253"/></g>
+    <g class="f t1" style="animation-delay:48.72s"><use href="#po" x="224" y="253"/></g>
+    <g class="f t1" style="animation-delay:48.78s"><use href="#pc" x="236" y="253"/></g>
+    <g class="f t1" style="animation-delay:48.84s"><use href="#pc" x="248" y="253"/></g>
+    <g class="f t1" style="animation-delay:48.9s"><use href="#po" x="260" y="253"/></g>
+    <g class="f t1" style="animation-delay:48.96s"><use href="#po" x="272" y="253"/></g>
+    <g class="f t1" style="animation-delay:49.02s"><use href="#pc" x="284" y="253"/></g>
+    <g class="f t1" style="animation-delay:49.08s"><use href="#pc" x="296" y="253"/></g>
+    <g class="f t1" style="animation-delay:49.14s"><use href="#po" x="308" y="253"/></g>
+    <g class="f t1" style="animation-delay:49.2s"><use href="#po" x="320" y="253"/></g>
+    <g class="f t1" style="animation-delay:49.26s"><use href="#pc" x="332" y="253"/></g>
+    <g class="f t1" style="animation-delay:49.32s"><use href="#pc" x="344" y="253"/></g>
+    <g class="f t1" style="animation-delay:49.38s"><use href="#po" x="356" y="253"/></g>
+    <g class="f t1" style="animation-delay:49.44s"><use href="#po" x="368" y="253"/></g>
+    <g class="f t1" style="animation-delay:49.5s"><use href="#pc" x="380" y="253"/></g>
+    <g class="f t1" style="animation-delay:49.56s"><use href="#pc" x="392" y="253"/></g>
+    <g class="f t1" style="animation-delay:49.62s"><use href="#po" x="404" y="253"/></g>
+    <g class="f t1" style="animation-delay:49.68s"><use href="#po" x="416" y="253"/></g>
+    <g class="f t1" style="animation-delay:49.74s"><use href="#pc" x="428" y="253"/></g>
+    <g class="f t1" style="animation-delay:49.8s"><use href="#pc" x="440" y="253"/></g>
+    <g class="f t1" style="animation-delay:49.86s"><use href="#po" x="452" y="253"/></g>
+    <g class="f t1" style="animation-delay:49.92s"><use href="#po" x="464" y="253"/></g>
+    <g class="f t1" style="animation-delay:49.98s"><use href="#pc" x="476" y="253"/></g>
+    <g class="f t1" style="animation-delay:50.04s"><use href="#pc" x="488" y="253"/></g>
+    <g class="f t1" style="animation-delay:50.1s"><use href="#po" x="500" y="253"/></g>
+    <g class="f t1" style="animation-delay:50.16s"><use href="#po" x="512" y="253"/></g>
+    <g class="f t1" style="animation-delay:50.22s"><use href="#pc" x="524" y="253"/></g>
+    <g class="f t1" style="animation-delay:50.28s"><use href="#pc" x="536" y="253"/></g>
+    <g class="f t1" style="animation-delay:50.34s"><use href="#po" x="548" y="253"/></g>
+    <g class="f t1" style="animation-delay:50.4s"><use href="#po" x="560" y="253"/></g>
+    <g class="f t1" style="animation-delay:50.46s"><use href="#pc" x="572" y="253"/></g>
+    <g class="f t1" style="animation-delay:50.52s"><use href="#pc" x="584" y="253"/></g>
+    <g class="f t1" style="animation-delay:50.58s"><use href="#po" x="596" y="253"/></g>
+    <g class="f t1" style="animation-delay:50.64s"><use href="#po" x="608" y="253"/></g>
+    <g class="f t1" style="animation-delay:50.7s"><use href="#pc" x="620" y="253"/></g>
+    <g class="f t1" style="animation-delay:50.76s"><use href="#pc" x="632" y="253"/></g>
+    <g class="f t1" style="animation-delay:50.82s"><use href="#po" x="644" y="253"/></g>
+    <g class="f t1" style="animation-delay:50.88s"><use href="#po" x="656" y="253"/></g>
+    <g class="f t1" style="animation-delay:50.94s"><use href="#pc" x="668" y="253"/></g>
+    <g class="f t1" style="animation-delay:51s"><use href="#pc" x="680" y="253"/></g>
+    <g class="f t1" style="animation-delay:51.06s"><use href="#po" x="692" y="253"/></g>
+    <g class="f t1" style="animation-delay:51.12s"><use href="#po" x="704" y="253"/></g>
+    <g class="f t1" style="animation-delay:51.18s"><use href="#pc" x="716" y="253"/></g>
+    <g class="f t1" style="animation-delay:51.24s"><use href="#pc" x="728" y="253"/></g>
+    <g class="f t1" style="animation-delay:51.3s"><use href="#po" x="740" y="253"/></g>
+    <g class="f t1" style="animation-delay:51.36s"><use href="#po" x="752" y="253"/></g>
+    <g class="f t1" style="animation-delay:51.42s"><use href="#pc" x="764" y="253"/></g>
+    <g class="f t1" style="animation-delay:51.48s"><use href="#pc" x="776" y="253"/></g>
+    <g class="f t1" style="animation-delay:51.54s"><use href="#po" x="788" y="253"/></g>
+    <g class="f t1" style="animation-delay:51.6s"><use href="#po" x="800" y="253"/></g>
+    <g class="f t1" style="animation-delay:51.66s"><use href="#pc" x="812" y="253"/></g>
+    <g class="f t1" style="animation-delay:51.72s"><use href="#pc" x="824" y="253"/></g>
+    <g class="f t1" style="animation-delay:51.78s"><use href="#po" x="836" y="253"/></g>
+    <g class="f t1" style="animation-delay:51.84s"><use href="#po" x="848" y="253"/></g>
+    <g class="f t1" style="animation-delay:51.9s"><use href="#pc" x="860" y="253"/></g>
+    <g class="f t1" style="animation-delay:51.96s"><use href="#pc" x="872" y="253"/></g>
+    <g class="f t1" style="animation-delay:52.02s"><use href="#po" x="884" y="253"/></g>
+    <g class="f t1" style="animation-delay:52.08s"><use href="#po" x="896" y="253"/></g>
+    <g class="f t1" style="animation-delay:52.14s"><use href="#pc" x="908" y="253"/></g>
+    <g class="f t1" style="animation-delay:52.2s"><use href="#pc" x="920" y="253"/></g>
+    <g class="f t1" style="animation-delay:52.26s"><use href="#po" x="932" y="253"/></g>
+    <g class="f t1" style="animation-delay:52.32s"><use href="#po" x="944" y="253"/></g>
+    <g class="f t1" style="animation-delay:52.38s"><use href="#pc" x="956" y="253"/></g>
+    <g class="f t1" style="animation-delay:52.44s"><use href="#pc" x="968" y="253"/></g>
+    <g class="f t1" style="animation-delay:52.5s"><use href="#po" x="980" y="253"/></g>
+    <g class="f t1" style="animation-delay:52.56s"><use href="#po" x="992" y="253"/></g>
+    <g class="f t1" style="animation-delay:52.62s"><use href="#pc" x="1004" y="253"/></g>
+    <g class="f t1" style="animation-delay:52.68s"><use href="#pc" x="1016" y="253"/></g>
+    <g class="f t1" style="animation-delay:52.74s"><use href="#po" x="1028" y="253"/></g>
+    <g class="f t1" style="animation-delay:52.8s"><use href="#po" x="1040" y="253"/></g>
+    <g class="f t1" style="animation-delay:52.86s"><use href="#pc" x="1052" y="253"/></g>
+    <g class="f t1" style="animation-delay:52.92s"><use href="#pc" x="1064" y="253"/></g>
+    <g class="f t1" style="animation-delay:52.98s"><use href="#po" x="1076" y="253"/></g>
+    <g class="f t1" style="animation-delay:53.04s"><use href="#po" x="1088" y="253"/></g>
+    <g class="f t1" style="animation-delay:53.1s"><use href="#pc" x="1100" y="253"/></g>
+    <g class="f t1" style="animation-delay:53.16s"><use href="#pc" x="1112" y="253"/></g>
+    <g class="f t1" style="animation-delay:53.22s"><use href="#po" x="1124" y="253"/></g>
+    <g class="f t1" style="animation-delay:53.28s"><use href="#po" x="1136" y="253"/></g>
+    <g class="f t1" style="animation-delay:53.34s"><use href="#pc" x="1148" y="253"/></g>
+    <g class="f t1" style="animation-delay:53.4s"><use href="#pc" x="1160" y="253"/></g>
+    <g class="f t1" style="animation-delay:53.46s"><use href="#po" x="1172" y="253"/></g>
+    <g class="f t1" style="animation-delay:53.52s"><use href="#po" x="1184" y="253"/></g>
+  </g>
+  <g data-line="ghost">
+    <g class="f t1" style="animation-delay:48.24s"><use href="#gh" x="20" y="253"/></g>
+    <g class="f t1" style="animation-delay:48.3s"><use href="#gh" x="32" y="253"/></g>
+    <g class="f t1" style="animation-delay:48.36s"><use href="#gh" x="44" y="253"/></g>
+    <g class="f t1" style="animation-delay:48.42s"><use href="#gh" x="56" y="253"/></g>
+    <g class="f t1" style="animation-delay:48.48s"><use href="#gh" x="68" y="253"/></g>
+    <g class="f t1" style="animation-delay:48.54s"><use href="#gh" x="80" y="253"/></g>
+    <g class="f t1" style="animation-delay:48.6s"><use href="#gh" x="92" y="253"/></g>
+    <g class="f t1" style="animation-delay:48.66s"><use href="#gh" x="104" y="253"/></g>
+    <g class="f t1" style="animation-delay:48.72s"><use href="#gh" x="116" y="253"/></g>
+    <g class="f t1" style="animation-delay:48.78s"><use href="#gh" x="128" y="253"/></g>
+    <g class="f t1" style="animation-delay:48.84s"><use href="#gh" x="140" y="253"/></g>
+    <g class="f t1" style="animation-delay:48.9s"><use href="#gh" x="152" y="253"/></g>
+    <g class="f t1" style="animation-delay:48.96s"><use href="#gh" x="164" y="253"/></g>
+    <g class="f t1" style="animation-delay:49.02s"><use href="#gh" x="176" y="253"/></g>
+    <g class="f t1" style="animation-delay:49.08s"><use href="#gh" x="188" y="253"/></g>
+    <g class="f t1" style="animation-delay:49.14s"><use href="#gh" x="200" y="253"/></g>
+    <g class="f t1" style="animation-delay:49.2s"><use href="#gh" x="212" y="253"/></g>
+    <g class="f t1" style="animation-delay:49.26s"><use href="#gh" x="224" y="253"/></g>
+    <g class="f t1" style="animation-delay:49.32s"><use href="#gh" x="236" y="253"/></g>
+    <g class="f t1" style="animation-delay:49.38s"><use href="#gh" x="248" y="253"/></g>
+    <g class="f t1" style="animation-delay:49.44s"><use href="#gh" x="260" y="253"/></g>
+    <g class="f t1" style="animation-delay:49.5s"><use href="#gh" x="272" y="253"/></g>
+    <g class="f t1" style="animation-delay:49.56s"><use href="#gh" x="284" y="253"/></g>
+    <g class="f t1" style="animation-delay:49.62s"><use href="#gh" x="296" y="253"/></g>
+    <g class="f t1" style="animation-delay:49.68s"><use href="#gh" x="308" y="253"/></g>
+    <g class="f t1" style="animation-delay:49.74s"><use href="#gh" x="320" y="253"/></g>
+    <g class="f t1" style="animation-delay:49.8s"><use href="#gh" x="332" y="253"/></g>
+    <g class="f t1" style="animation-delay:49.86s"><use href="#gh" x="344" y="253"/></g>
+    <g class="f t1" style="animation-delay:49.92s"><use href="#gh" x="356" y="253"/></g>
+    <g class="f t1" style="animation-delay:49.98s"><use href="#gh" x="368" y="253"/></g>
+    <g class="f t1" style="animation-delay:50.04s"><use href="#gh" x="380" y="253"/></g>
+    <g class="f t1" style="animation-delay:50.1s"><use href="#gh" x="392" y="253"/></g>
+    <g class="f t1" style="animation-delay:50.16s"><use href="#gh" x="404" y="253"/></g>
+    <g class="f t1" style="animation-delay:50.22s"><use href="#gh" x="416" y="253"/></g>
+    <g class="f t1" style="animation-delay:50.28s"><use href="#gh" x="428" y="253"/></g>
+    <g class="f t1" style="animation-delay:50.34s"><use href="#gh" x="440" y="253"/></g>
+    <g class="f t1" style="animation-delay:50.4s"><use href="#gh" x="452" y="253"/></g>
+    <g class="f t1" style="animation-delay:50.46s"><use href="#gh" x="464" y="253"/></g>
+    <g class="f t1" style="animation-delay:50.52s"><use href="#gh" x="476" y="253"/></g>
+    <g class="f t1" style="animation-delay:50.58s"><use href="#gh" x="488" y="253"/></g>
+    <g class="f t1" style="animation-delay:50.64s"><use href="#gh" x="500" y="253"/></g>
+    <g class="f t1" style="animation-delay:50.7s"><use href="#gh" x="512" y="253"/></g>
+    <g class="f t1" style="animation-delay:50.76s"><use href="#gh" x="524" y="253"/></g>
+    <g class="f t1" style="animation-delay:50.82s"><use href="#gh" x="536" y="253"/></g>
+    <g class="f t1" style="animation-delay:50.88s"><use href="#gh" x="548" y="253"/></g>
+    <g class="f t1" style="animation-delay:50.94s"><use href="#gh" x="560" y="253"/></g>
+    <g class="f t1" style="animation-delay:51s"><use href="#gh" x="572" y="253"/></g>
+    <g class="f t1" style="animation-delay:51.06s"><use href="#gh" x="584" y="253"/></g>
+    <g class="f t1" style="animation-delay:51.12s"><use href="#gh" x="596" y="253"/></g>
+    <g class="f t1" style="animation-delay:51.18s"><use href="#gh" x="608" y="253"/></g>
+    <g class="f t1" style="animation-delay:51.24s"><use href="#gh" x="620" y="253"/></g>
+    <g class="f t1" style="animation-delay:51.3s"><use href="#gh" x="632" y="253"/></g>
+    <g class="f t1" style="animation-delay:51.36s"><use href="#gh" x="644" y="253"/></g>
+    <g class="f t1" style="animation-delay:51.42s"><use href="#gh" x="656" y="253"/></g>
+    <g class="f t1" style="animation-delay:51.48s"><use href="#gh" x="668" y="253"/></g>
+    <g class="f t1" style="animation-delay:51.54s"><use href="#gh" x="680" y="253"/></g>
+    <g class="f t1" style="animation-delay:51.6s"><use href="#gh" x="692" y="253"/></g>
+    <g class="f t1" style="animation-delay:51.66s"><use href="#gh" x="704" y="253"/></g>
+    <g class="f t1" style="animation-delay:51.72s"><use href="#gh" x="716" y="253"/></g>
+    <g class="f t1" style="animation-delay:51.78s"><use href="#gh" x="728" y="253"/></g>
+    <g class="f t1" style="animation-delay:51.84s"><use href="#gh" x="740" y="253"/></g>
+    <g class="f t1" style="animation-delay:51.9s"><use href="#gh" x="752" y="253"/></g>
+    <g class="f t1" style="animation-delay:51.96s"><use href="#gh" x="764" y="253"/></g>
+    <g class="f t1" style="animation-delay:52.02s"><use href="#gh" x="776" y="253"/></g>
+    <g class="f t1" style="animation-delay:52.08s"><use href="#gh" x="788" y="253"/></g>
+    <g class="f t1" style="animation-delay:52.14s"><use href="#gh" x="800" y="253"/></g>
+    <g class="f t1" style="animation-delay:52.2s"><use href="#gh" x="812" y="253"/></g>
+    <g class="f t1" style="animation-delay:52.26s"><use href="#gh" x="824" y="253"/></g>
+    <g class="f t1" style="animation-delay:52.32s"><use href="#gh" x="836" y="253"/></g>
+    <g class="f t1" style="animation-delay:52.38s"><use href="#gh" x="848" y="253"/></g>
+    <g class="f t1" style="animation-delay:52.44s"><use href="#gh" x="860" y="253"/></g>
+    <g class="f t1" style="animation-delay:52.5s"><use href="#gh" x="872" y="253"/></g>
+    <g class="f t1" style="animation-delay:52.56s"><use href="#gh" x="884" y="253"/></g>
+    <g class="f t1" style="animation-delay:52.62s"><use href="#gh" x="896" y="253"/></g>
+    <g class="f t1" style="animation-delay:52.68s"><use href="#gh" x="908" y="253"/></g>
+    <g class="f t1" style="animation-delay:52.74s"><use href="#gh" x="920" y="253"/></g>
+    <g class="f t1" style="animation-delay:52.8s"><use href="#gh" x="932" y="253"/></g>
+    <g class="f t1" style="animation-delay:52.86s"><use href="#gh" x="944" y="253"/></g>
+    <g class="f t1" style="animation-delay:52.92s"><use href="#gh" x="956" y="253"/></g>
+    <g class="f t1" style="animation-delay:52.98s"><use href="#gh" x="968" y="253"/></g>
+    <g class="f t1" style="animation-delay:53.04s"><use href="#gh" x="980" y="253"/></g>
+    <g class="f t1" style="animation-delay:53.1s"><use href="#gh" x="992" y="253"/></g>
+    <g class="f t1" style="animation-delay:53.16s"><use href="#gh" x="1004" y="253"/></g>
+    <g class="f t1" style="animation-delay:53.22s"><use href="#gh" x="1016" y="253"/></g>
+    <g class="f t1" style="animation-delay:53.28s"><use href="#gh" x="1028" y="253"/></g>
+    <g class="f t1" style="animation-delay:53.34s"><use href="#gh" x="1040" y="253"/></g>
+    <g class="f t1" style="animation-delay:53.4s"><use href="#gh" x="1052" y="253"/></g>
+    <g class="f t1" style="animation-delay:53.46s"><use href="#gh" x="1064" y="253"/></g>
+    <g class="f t1" style="animation-delay:53.52s"><use href="#gh" x="1076" y="253"/></g>
+    <g class="f t1" style="animation-delay:53.58s"><use href="#gh" x="1088" y="253"/></g>
+    <g class="f t1" style="animation-delay:53.64s"><use href="#gh" x="1100" y="253"/></g>
+    <g class="f t1" style="animation-delay:53.7s"><use href="#gh" x="1112" y="253"/></g>
+    <g class="f t1" style="animation-delay:53.76s"><use href="#gh" x="1124" y="253"/></g>
+    <g class="f t1" style="animation-delay:53.82s"><use href="#gh" x="1136" y="253"/></g>
+    <g class="f t1" style="animation-delay:53.88s"><use href="#gh" x="1148" y="253"/></g>
+    <g class="f t1" style="animation-delay:53.94s"><use href="#gh" x="1160" y="253"/></g>
+    <g class="f t1" style="animation-delay:54s"><use href="#gh" x="1172" y="253"/></g>
+    <g class="f t1" style="animation-delay:54.06s"><use href="#gh" x="1184" y="253"/></g>
+  </g>
 
   <g font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="19" xml:space="preserve">
   <text x="1156" y="44" text-anchor="end" font-size="14" fill="#a1a1aa">zivhdinfo</text>
@@ -51,7 +350,7 @@
   <text x="44" y="96" textLength="171"><tspan fill="#ff7b72">const </tspan><tspan fill="#e6edf3">zivhd</tspan><tspan fill="#8b949e"> = {</tspan></text>
 
   <g data-line="web">
-  <text x="66.8" y="130" textLength="45.6"><tspan fill="#79c0ff">web</tspan><tspan fill="#8b949e">:</tspan></text>
+    <text x="66.8" y="130" textLength="45.6"><tspan fill="#79c0ff">web</tspan><tspan fill="#8b949e">:</tspan></text>
     <g class="f t2" style="animation-delay:0s"><rect x="123.8" y="114.5" width="57" height="21" fill="#1f3d63"/><text x="123.8" y="130" textLength="353.4"><tspan fill="#8b949e">[</tspan><tspan fill="#a5d6ff">&quot;vue&quot;</tspan><tspan fill="#8b949e">, </tspan><tspan fill="#a5d6ff">&quot;react&quot;</tspan><tspan fill="#8b949e">, </tspan><tspan fill="#a5d6ff">&quot;typescript&quot;</tspan><tspan fill="#8b949e">]</tspan><tspan fill="#8b949e">,</tspan></text></g>
     <g class="f t2" style="animation-delay:0.12s"><rect x="123.8" y="114.5" width="114" height="21" fill="#1f3d63"/><text x="123.8" y="130" textLength="353.4"><tspan fill="#8b949e">[</tspan><tspan fill="#a5d6ff">&quot;vue&quot;</tspan><tspan fill="#8b949e">, </tspan><tspan fill="#a5d6ff">&quot;react&quot;</tspan><tspan fill="#8b949e">, </tspan><tspan fill="#a5d6ff">&quot;typescript&quot;</tspan><tspan fill="#8b949e">]</tspan><tspan fill="#8b949e">,</tspan></text></g>
     <g class="f t2" style="animation-delay:0.24s"><rect x="123.8" y="114.5" width="171" height="21" fill="#1f3d63"/><text x="123.8" y="130" textLength="353.4"><tspan fill="#8b949e">[</tspan><tspan fill="#a5d6ff">&quot;vue&quot;</tspan><tspan fill="#8b949e">, </tspan><tspan fill="#a5d6ff">&quot;react&quot;</tspan><tspan fill="#8b949e">, </tspan><tspan fill="#a5d6ff">&quot;typescript&quot;</tspan><tspan fill="#8b949e">]</tspan><tspan fill="#8b949e">,</tspan></text></g>
@@ -159,11 +458,11 @@
     <text x="123.8" y="130" textLength="342" class="f t1" style="animation-delay:34.5s"><tspan fill="#8b949e">[</tspan><tspan fill="#a5d6ff">&quot;vue&quot;</tspan><tspan fill="#8b949e">, </tspan><tspan fill="#a5d6ff">&quot;react&quot;</tspan><tspan fill="#8b949e">, </tspan><tspan fill="#a5d6ff">&quot;typescript</tspan><tspan class="c" fill="#8b949e">█</tspan><tspan fill="#8b949e">,</tspan></text>
     <text x="123.8" y="130" textLength="353.4" class="f t1" style="animation-delay:34.56s"><tspan fill="#8b949e">[</tspan><tspan fill="#a5d6ff">&quot;vue&quot;</tspan><tspan fill="#8b949e">, </tspan><tspan fill="#a5d6ff">&quot;react&quot;</tspan><tspan fill="#8b949e">, </tspan><tspan fill="#a5d6ff">&quot;typescript&quot;</tspan><tspan class="c" fill="#8b949e">█</tspan><tspan fill="#8b949e">,</tspan></text>
     <text x="123.8" y="130" textLength="364.8" class="f t18 bl" style="animation-delay:34.62s"><tspan fill="#8b949e">[</tspan><tspan fill="#a5d6ff">&quot;vue&quot;</tspan><tspan fill="#8b949e">, </tspan><tspan fill="#a5d6ff">&quot;react&quot;</tspan><tspan fill="#8b949e">, </tspan><tspan fill="#a5d6ff">&quot;typescript&quot;</tspan><tspan fill="#8b949e">]</tspan><tspan fill="#8b949e">,</tspan><tspan class="c" fill="#8b949e">█</tspan></text>
-    <text x="123.8" y="130" textLength="353.4" class="f t200 still" style="animation-delay:35.7s"><tspan fill="#8b949e">[</tspan><tspan fill="#a5d6ff">&quot;vue&quot;</tspan><tspan fill="#8b949e">, </tspan><tspan fill="#a5d6ff">&quot;react&quot;</tspan><tspan fill="#8b949e">, </tspan><tspan fill="#a5d6ff">&quot;typescript&quot;</tspan><tspan fill="#8b949e">]</tspan><tspan fill="#8b949e">,</tspan></text>
+    <text x="123.8" y="130" textLength="353.4" class="f t322 still" style="animation-delay:35.7s"><tspan fill="#8b949e">[</tspan><tspan fill="#a5d6ff">&quot;vue&quot;</tspan><tspan fill="#8b949e">, </tspan><tspan fill="#a5d6ff">&quot;react&quot;</tspan><tspan fill="#8b949e">, </tspan><tspan fill="#a5d6ff">&quot;typescript&quot;</tspan><tspan fill="#8b949e">]</tspan><tspan fill="#8b949e">,</tspan></text>
   </g>
 
   <g data-line="api">
-  <text x="66.8" y="164" textLength="45.6"><tspan fill="#79c0ff">api</tspan><tspan fill="#8b949e">:</tspan></text>
+    <text x="66.8" y="164" textLength="45.6"><tspan fill="#79c0ff">api</tspan><tspan fill="#8b949e">:</tspan></text>
     <text x="123.8" y="164" textLength="364.8" class="f t90 still" style="animation-delay:0s"><tspan fill="#8b949e">[</tspan><tspan fill="#a5d6ff">&quot;laravel&quot;</tspan><tspan fill="#8b949e">, </tspan><tspan fill="#a5d6ff">&quot;adonis&quot;</tspan><tspan fill="#8b949e">, </tspan><tspan fill="#a5d6ff">&quot;nestjs&quot;</tspan><tspan fill="#8b949e">]</tspan><tspan fill="#8b949e">,</tspan></text>
     <g class="f t2" style="animation-delay:5.4s"><rect x="123.8" y="148.5" width="57" height="21" fill="#1f3d63"/><text x="123.8" y="164" textLength="364.8"><tspan fill="#8b949e">[</tspan><tspan fill="#a5d6ff">&quot;laravel&quot;</tspan><tspan fill="#8b949e">, </tspan><tspan fill="#a5d6ff">&quot;adonis&quot;</tspan><tspan fill="#8b949e">, </tspan><tspan fill="#a5d6ff">&quot;nestjs&quot;</tspan><tspan fill="#8b949e">]</tspan><tspan fill="#8b949e">,</tspan></text></g>
     <g class="f t2" style="animation-delay:5.52s"><rect x="123.8" y="148.5" width="114" height="21" fill="#1f3d63"/><text x="123.8" y="164" textLength="364.8"><tspan fill="#8b949e">[</tspan><tspan fill="#a5d6ff">&quot;laravel&quot;</tspan><tspan fill="#8b949e">, </tspan><tspan fill="#a5d6ff">&quot;adonis&quot;</tspan><tspan fill="#8b949e">, </tspan><tspan fill="#a5d6ff">&quot;nestjs&quot;</tspan><tspan fill="#8b949e">]</tspan><tspan fill="#8b949e">,</tspan></text></g>
@@ -277,11 +576,11 @@
     <text x="123.8" y="164" textLength="353.4" class="f t1" style="animation-delay:39.96s"><tspan fill="#8b949e">[</tspan><tspan fill="#a5d6ff">&quot;laravel&quot;</tspan><tspan fill="#8b949e">, </tspan><tspan fill="#a5d6ff">&quot;adonis&quot;</tspan><tspan fill="#8b949e">, </tspan><tspan fill="#a5d6ff">&quot;nestjs</tspan><tspan class="c" fill="#8b949e">█</tspan><tspan fill="#8b949e">,</tspan></text>
     <text x="123.8" y="164" textLength="364.8" class="f t1" style="animation-delay:40.02s"><tspan fill="#8b949e">[</tspan><tspan fill="#a5d6ff">&quot;laravel&quot;</tspan><tspan fill="#8b949e">, </tspan><tspan fill="#a5d6ff">&quot;adonis&quot;</tspan><tspan fill="#8b949e">, </tspan><tspan fill="#a5d6ff">&quot;nestjs&quot;</tspan><tspan class="c" fill="#8b949e">█</tspan><tspan fill="#8b949e">,</tspan></text>
     <text x="123.8" y="164" textLength="376.2" class="f t18 bl" style="animation-delay:40.08s"><tspan fill="#8b949e">[</tspan><tspan fill="#a5d6ff">&quot;laravel&quot;</tspan><tspan fill="#8b949e">, </tspan><tspan fill="#a5d6ff">&quot;adonis&quot;</tspan><tspan fill="#8b949e">, </tspan><tspan fill="#a5d6ff">&quot;nestjs&quot;</tspan><tspan fill="#8b949e">]</tspan><tspan fill="#8b949e">,</tspan><tspan class="c" fill="#8b949e">█</tspan></text>
-    <text x="123.8" y="164" textLength="364.8" class="f t109" style="animation-delay:41.16s"><tspan fill="#8b949e">[</tspan><tspan fill="#a5d6ff">&quot;laravel&quot;</tspan><tspan fill="#8b949e">, </tspan><tspan fill="#a5d6ff">&quot;adonis&quot;</tspan><tspan fill="#8b949e">, </tspan><tspan fill="#a5d6ff">&quot;nestjs&quot;</tspan><tspan fill="#8b949e">]</tspan><tspan fill="#8b949e">,</tspan></text>
+    <text x="123.8" y="164" textLength="364.8" class="f t231" style="animation-delay:41.16s"><tspan fill="#8b949e">[</tspan><tspan fill="#a5d6ff">&quot;laravel&quot;</tspan><tspan fill="#8b949e">, </tspan><tspan fill="#a5d6ff">&quot;adonis&quot;</tspan><tspan fill="#8b949e">, </tspan><tspan fill="#a5d6ff">&quot;nestjs&quot;</tspan><tspan fill="#8b949e">]</tspan><tspan fill="#8b949e">,</tspan></text>
   </g>
 
   <g data-line="rule">
-  <text x="66.8" y="198" textLength="57"><tspan fill="#79c0ff">rule</tspan><tspan fill="#8b949e">:</tspan></text>
+    <text x="66.8" y="198" textLength="57"><tspan fill="#79c0ff">rule</tspan><tspan fill="#8b949e">:</tspan></text>
     <text x="135.2" y="198" textLength="364.8" class="f t181 still" style="animation-delay:0s"><tspan fill="#a5d6ff">&quot;types first, then the feature&quot;</tspan><tspan fill="#8b949e">,</tspan></text>
     <g class="f t2" style="animation-delay:10.86s"><rect x="135.2" y="182.5" width="57" height="21" fill="#1f3d63"/><text x="135.2" y="198" textLength="364.8"><tspan fill="#a5d6ff">&quot;types first, then the feature&quot;</tspan><tspan fill="#8b949e">,</tspan></text></g>
     <g class="f t2" style="animation-delay:10.98s"><rect x="135.2" y="182.5" width="114" height="21" fill="#1f3d63"/><text x="135.2" y="198" textLength="364.8"><tspan fill="#a5d6ff">&quot;types first, then the feature&quot;</tspan><tspan fill="#8b949e">,</tspan></text></g>
@@ -388,7 +687,7 @@
     <text x="135.2" y="198" textLength="353.4" class="f t1" style="animation-delay:45.42s"><tspan fill="#a5d6ff">&quot;types first, then the featur</tspan><tspan class="c" fill="#8b949e">█</tspan><tspan fill="#8b949e">,</tspan></text>
     <text x="135.2" y="198" textLength="364.8" class="f t1" style="animation-delay:45.48s"><tspan fill="#a5d6ff">&quot;types first, then the feature</tspan><tspan class="c" fill="#8b949e">█</tspan><tspan fill="#8b949e">,</tspan></text>
     <text x="135.2" y="198" textLength="376.2" class="f t18 bl" style="animation-delay:45.54s"><tspan fill="#a5d6ff">&quot;types first, then the feature&quot;</tspan><tspan fill="#8b949e">,</tspan><tspan class="c" fill="#8b949e">█</tspan></text>
-    <text x="135.2" y="198" textLength="364.8" class="f t18" style="animation-delay:46.62s"><tspan fill="#a5d6ff">&quot;types first, then the feature&quot;</tspan><tspan fill="#8b949e">,</tspan></text>
+    <text x="135.2" y="198" textLength="364.8" class="f t140" style="animation-delay:46.62s"><tspan fill="#a5d6ff">&quot;types first, then the feature&quot;</tspan><tspan fill="#8b949e">,</tspan></text>
   </g>
   <text x="44" y="232" textLength="11.4"><tspan fill="#8b949e">}</tspan></text>
   </g>
