@@ -6,7 +6,11 @@
 //
 // header: mô phỏng thao tác sửa code trong editor. Lần lượt từng dòng (web, api,
 //   rule) được bôi đen giá trị, xoá, gõ lại giá trị mới, rồi nghỉ một nhịp dài.
-//   Hết một vòng sửa thì có màn pacman chạy ngang chân card, rồi lặp lại.
+//   Hết một vòng sửa thì cross-fade sang màn pacman chiếm trọn card (mê cung,
+//   hạt đậu, ba con ma), chạy hết màn rồi cross-fade ngược về màn code.
+//   Riêng hai lớp màn hình dùng `linear` để fade mượt — xem ghi chú 4, chỉ các
+//   KHUNG mới bắt buộc step-end; lớp bọc thì mốc opacity do mình đặt tay nên
+//   thứ tự luôn đúng.
 // stack : mỗi ô icon fade qua lại giữa hai công nghệ.
 //
 // ---------------------------------------------------------------------------
@@ -41,6 +45,8 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+
+import { buildGame, DEFS, mazeMarkup } from "./pacman.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const ICONS = JSON.parse(await readFile(join(ROOT, "tools/icons.json"), "utf8"));
@@ -113,18 +119,9 @@ const DONE_HOLD = 18; // giữ sau khi gõ xong, con trỏ nháy
 const IDLE = 18; // nghỉ giữa hai lần sửa, không con trỏ không bôi đen
 const FADE = 18; // giây cho trọn một vòng fade icon
 
-// Màn pacman chạy sau khi sửa xong cả ba dòng.
-const PAC_Y = 253; // tâm làn chạy, nằm dưới dòng `}`
-const PAC_R = 9;
-const PAC_X0 = 20;
-const PAC_X1 = 1180;
-const PAC_DX = 12; // mỗi bước dịch bao nhiêu px
-const PAC_STEP = 1; // mỗi bước kéo dài bao nhiêu slice
-const PAC_TRAIL = 9; // con ma bám sau pacman bao nhiêu bước
-const PAC_TAIL = 16; // nghỉ sau khi cả hai chạy khuất
-const DOT_X0 = 68;
-const DOT_GAP = 37;
-const DOT_R = 2.5;
+// Chuyển màn giữa màn code và màn pacman.
+const XFADE = 10; // số slice cho mỗi lần fade chuyển màn
+const XBLACK = 4; // số slice tối hẳn giữa hai lần fade
 
 /* ------------------------------------------------------------------ bảng màu */
 
@@ -132,7 +129,6 @@ const C = {
   cardBg: "#141417", cardStroke: "#27272a", inner: "#09090b", innerStroke: "#232326",
   comment: "#6e7681", keyword: "#ff7b72", ident: "#e6edf3", punct: "#8b949e",
   prop: "#79c0ff", str: "#a5d6ff", meta: "#a1a1aa", sel: "#1f3d63", onBlack: "#e6edf3",
-  pac: "#f7df1e", ghost: "#ff7b72", dot: "#3f4654", eye: "#e6edf3", pupil: "#09090b",
 };
 
 /* ----------------------------------------------------------------- tiện ích */
@@ -155,15 +151,6 @@ function colorize(text) {
     else runs.push({ kind, text: ch });
   }
   return runs.map((r) => `<tspan fill="${C[r.kind]}">${esc(r.text)}</tspan>`).join("");
-}
-
-// Hình pacman: đường tròn bán kính PAC_R khuyết một góc mồm mở về bên phải.
-function pacPath(deg) {
-  const a = (deg * Math.PI) / 180;
-  const x = n2(PAC_R * Math.cos(a));
-  const y = n2(PAC_R * Math.sin(a));
-  // large-arc=1 sweep=0: đi vòng dài, ngược chiều kim đồng hồ trên màn hình.
-  return `M0,0L${x},${-y}A${PAC_R},${PAC_R} 0 1 0 ${x},${y}Z`;
 }
 
 /* ------------------------------------------------- header: dựng dòng thời gian */
@@ -211,16 +198,25 @@ function timeline() {
     }
   }
 
-  // Sửa xong cả ba dòng thì tới màn pacman; code đứng yên ở giá trị đầu.
-  const pacAt = steps.reduce((a, s) => a + s.dur, 0);
-  const lastStep = Math.round((PAC_X1 - PAC_X0) / PAC_DX) + PAC_TRAIL;
-  snap(lastStep * PAC_STEP + PAC_TAIL, null);
+  // Sửa xong cả ba dòng thì chuyển sang màn pacman. Suốt màn đó code đứng yên ở
+  // giá trị đầu, nên chỉ cần một bước dài là đủ cho cả ba dòng.
+  //
+  //   codeEnd ──fade ra──┐   ┌──fade vào── gameAt ─── chạy ─── gameEnd ──fade ra──┐   ┌──fade vào── hết vòng
+  //                      └tối┘                                                    └tối┘
+  const codeEnd = steps.reduce((a, s) => a + s.dur, 0);
+  const screenOn = codeEnd + XFADE + XBLACK; // màn game bắt đầu ló ra
+  const gameAt = screenOn + XFADE; // đã hiện đủ, pacman bắt đầu chạy
+  const probe = buildGame({ at: screenOn, visible: gameAt, hold: XFADE });
+  const gameEnd = gameAt + probe.steps;
+  const cycle = gameEnd + XFADE + XBLACK + XFADE;
 
-  return { steps, pacAt, lastStep };
+  snap(cycle - codeEnd, null);
+
+  return { steps, codeEnd, screenOn, gameAt, gameEnd, game: probe };
 }
 
 function header() {
-  const { steps, pacAt, lastStep } = timeline();
+  const { steps, codeEnd, screenOn, gameAt, gameEnd, game } = timeline();
   const total = steps.reduce((a, s) => a + s.dur, 0);
   const dur = n2(total * SLICE);
 
@@ -244,37 +240,13 @@ function header() {
     }
   }
 
-  /* --- màn pacman: mỗi bước là một khung đứng yên, dịch bằng x/y của <use> --- */
+  /* --------------------------------- màn game: hạt đậu, pacman và ba con ma */
 
-  const pac = [];
-  const ghost = [];
-  for (let s = 0; s <= lastStep; s++) {
-    const at = pacAt + s * PAC_STEP;
-    if (s <= lastStep - PAC_TRAIL) {
-      const x = PAC_X0 + s * PAC_DX;
-      const shape = s % 4 < 2 ? "po" : "pc"; // mồm nhai
-      pac.push({ at, dur: PAC_STEP, m: `<use href="#${shape}" x="${x}" y="${PAC_Y}"/>` });
-    }
-    if (s >= PAC_TRAIL) {
-      const x = PAC_X0 + (s - PAC_TRAIL) * PAC_DX;
-      ghost.push({ at, dur: PAC_STEP, m: `<use href="#gh" x="${x}" y="${PAC_Y}"/>` });
-    }
-  }
-
-  // Hạt đậu biến mất đúng lúc pacman đi qua -> mỗi hạt một độ dài hiển thị riêng.
-  const dots = [];
-  for (let x = DOT_X0; x <= PAC_X1 - 40; x += DOT_GAP) {
-    const eaten = Math.max(1, Math.ceil((x - PAC_X0) / PAC_DX)) * PAC_STEP;
-    dots.push({
-      at: pacAt,
-      dur: eaten,
-      m: `<circle cx="${x}" cy="${PAC_Y}" r="${DOT_R}" fill="${C.dot}"/>`,
-    });
-  }
+  const gameFrames = [...game.dots, ...game.sprites, game.ready];
 
   /* ------------------------------- CSS: một @keyframes cho mỗi độ dài hiển thị */
 
-  const all = [...perLine.values()].flat().concat(pac, ghost, dots);
+  const all = [...perLine.values()].flat().concat(gameFrames);
   const spans = [...new Set(all.map((f) => f.dur))].sort((a, b) => a - b);
   const pctOf = (d) => Number(((d / total) * 100).toFixed(4));
   const keyframes = spans
@@ -337,17 +309,27 @@ function header() {
     out.push("  </g>", "");
   }
 
-  const game = [
+  const gameMarkup = [
     `  <g data-line="dots">`,
-    ...dots.map((f) => `    <g ${cls(f)}>${f.m}</g>`),
+    "    " + game.still.join(""),
+    ...game.dots.map((f) => `    <g ${cls(f)}>${f.m}</g>`),
     `  </g>`,
-    `  <g data-line="pac">`,
-    ...pac.map((f) => `    <g ${cls(f)}>${f.m}</g>`),
+    `  <g data-line="sprites">`,
+    ...game.sprites.map((f) => `    <g ${cls(f)}>${f.m}</g>`),
     `  </g>`,
-    `  <g data-line="ghost">`,
-    ...ghost.map((f) => `    <g ${cls(f)}>${f.m}</g>`),
-    `  </g>`,
+    `  <g ${cls(game.ready)}>${game.ready.m}</g>`,
   ].join("\n");
+
+  // Hai lớp màn hình cross-fade vào nhau. Đây là chỗ DUY NHẤT dùng `linear`:
+  // mốc opacity ở đây do mình đặt tay nên luôn đúng thứ tự, còn các KHUNG thì
+  // vẫn phải step-end (ghi chú 4).
+  const at = (slice) => Number(((slice / total) * 100).toFixed(4));
+  const screens =
+    `    .sc, .sg { animation-duration:${dur}s; animation-timing-function:linear; animation-iteration-count:infinite }\n` +
+    `    .sc { animation-name:sc }\n` +
+    `    .sg { animation-name:sg; opacity:0 }\n` +
+    `    @keyframes sc { 0%,${at(codeEnd)}% { opacity:1 } ${at(codeEnd + XFADE)}%,${at(total - XFADE)}% { opacity:0 } 100% { opacity:1 } }\n` +
+    `    @keyframes sg { 0%,${at(screenOn)}% { opacity:0 } ${at(gameAt)}%,${at(gameEnd)}% { opacity:1 } ${at(gameEnd + XFADE)}%,100% { opacity:0 } }`;
 
   const label = LINES.map((l) => `${l.key}: ${l.values[0]}`).join("; ");
 
@@ -356,32 +338,32 @@ function header() {
   <style>
     .f { opacity:0; animation:${dur}s step-end infinite }
 ${keyframes}
+${screens}
     .bl .c { animation: blink 1.06s steps(1,end) infinite }
     @keyframes blink { 0%,55% { opacity:1 } 56%,100% { opacity:0 } }
+    .pw { animation: pwb 0.36s steps(1,end) infinite }
+    @keyframes pwb { 0%,62% { opacity:1 } 63%,100% { opacity:0 } }
     @media (prefers-reduced-motion: reduce) {
       .f { animation:none }
       .f.still { opacity:1 }
-      .bl .c { animation:none }
+      .bl .c, .pw { animation:none }
+      .sc { animation:none; opacity:1 }
+      .sg { animation:none; opacity:0 }
     }
   </style>
   <defs>
-    <path id="po" d="${pacPath(33)}" fill="${C.pac}"/>
-    <path id="pc" d="${pacPath(4)}" fill="${C.pac}"/>
-    <g id="gh">
-      <path d="M-8,7V-1A8,8 0 0 1 8,-1V7q-2,4.5 -4,0q-2,4.5 -4,0q-2,4.5 -4,0q-2,4.5 -4,0Z" fill="${C.ghost}"/>
-      <circle cx="-3.4" cy="-2" r="2.4" fill="${C.eye}"/>
-      <circle cx="3.4" cy="-2" r="2.4" fill="${C.eye}"/>
-      <circle cx="-2.6" cy="-2" r="1.2" fill="${C.pupil}"/>
-      <circle cx="4.2" cy="-2" r="1.2" fill="${C.pupil}"/>
-    </g>
+    ${DEFS}
   </defs>
 
   <rect x="0.75" y="0.75" width="1198.5" height="278.5" rx="16" fill="${C.cardBg}" stroke="${C.cardStroke}"/>
   <rect x="8.75" y="8.75" width="1182.5" height="262.5" rx="12" fill="${C.inner}" stroke="${C.innerStroke}"/>
 
-${game}
+  <g class="sg" font-family="${MONO}">
+    ${mazeMarkup()}
+${gameMarkup}
+  </g>
 
-  <g font-family="${MONO}" font-size="${FONT}" xml:space="preserve">
+  <g class="sc" font-family="${MONO}" font-size="${FONT}" xml:space="preserve">
   <text x="1156" y="44" text-anchor="end" font-size="14" fill="${C.meta}">zivhdinfo</text>
 
   ${txt(X0, 62, `<tspan fill="${C.comment}">// the stack I reach for</tspan>`, 23)}
