@@ -449,9 +449,9 @@
     <g class="f t10" style="animation-delay:0s"><rect class="pw" x="64.5" y="54.5" width="11" height="11" rx="2" fill="#39d353"/></g>
     <g class="f t11" style="animation-delay:0s"><rect x="87.5" y="57.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t13" style="animation-delay:0s"><rect x="107.5" y="57.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
-    <g class="f t14" style="animation-delay:0s"><rect x="127.5" y="57.5" width="5" height="5" rx="1" fill="#006d32"/></g>
+    <g class="f t14" style="animation-delay:0s"><rect x="127.5" y="57.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t15" style="animation-delay:0s"><rect x="147.5" y="57.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
-    <g class="f t17" style="animation-delay:0s"><rect x="167.5" y="57.5" width="5" height="5" rx="1" fill="#006d32"/></g>
+    <g class="f t17" style="animation-delay:0s"><rect x="167.5" y="57.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t18" style="animation-delay:0s"><rect x="187.5" y="57.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t20" style="animation-delay:0s"><rect x="207.5" y="57.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t23" style="animation-delay:0s"><rect x="247.5" y="57.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
@@ -477,8 +477,8 @@
     <g class="f t68" style="animation-delay:0s"><rect x="887.5" y="57.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t70" style="animation-delay:0s"><rect x="907.5" y="57.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t71" style="animation-delay:0s"><rect x="927.5" y="57.5" width="5" height="5" rx="1" fill="#006d32"/></g>
-    <g class="f t73" style="animation-delay:0s"><rect x="947.5" y="57.5" width="5" height="5" rx="1" fill="#26a641"/></g>
-    <g class="f t74" style="animation-delay:0s"><rect x="967.5" y="57.5" width="5" height="5" rx="1" fill="#006d32"/></g>
+    <g class="f t73" style="animation-delay:0s"><rect x="947.5" y="57.5" width="5" height="5" rx="1" fill="#006d32"/></g>
+    <g class="f t74" style="animation-delay:0s"><rect x="967.5" y="57.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t75" style="animation-delay:0s"><rect x="987.5" y="57.5" width="5" height="5" rx="1" fill="#006d32"/></g>
     <g class="f t77" style="animation-delay:0s"><rect x="1007.5" y="57.5" width="5" height="5" rx="1" fill="#006d32"/></g>
     <g class="f t78" style="animation-delay:0s"><rect x="1027.5" y="57.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
@@ -503,9 +503,9 @@
     <g class="f t148" style="animation-delay:0s"><rect x="287.5" y="97.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t150" style="animation-delay:0s"><rect x="267.5" y="97.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t153" style="animation-delay:0s"><rect x="227.5" y="97.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
-    <g class="f t154" style="animation-delay:0s"><rect x="207.5" y="97.5" width="5" height="5" rx="1" fill="#006d32"/></g>
+    <g class="f t154" style="animation-delay:0s"><rect x="207.5" y="97.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t156" style="animation-delay:0s"><rect x="187.5" y="97.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
-    <g class="f t157" style="animation-delay:0s"><rect x="167.5" y="97.5" width="5" height="5" rx="1" fill="#006d32"/></g>
+    <g class="f t157" style="animation-delay:0s"><rect x="167.5" y="97.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t163" style="animation-delay:0s"><rect x="87.5" y="97.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t164" style="animation-delay:0s"><rect x="67.5" y="97.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t165" style="animation-delay:0s"><rect x="67.5" y="117.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
@@ -520,12 +520,12 @@
     <g class="f t185" style="animation-delay:0s"><rect x="327.5" y="137.5" width="5" height="5" rx="1" fill="#006d32"/></g>
     <g class="f t190" style="animation-delay:0s"><rect x="387.5" y="137.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t191" style="animation-delay:0s"><rect x="407.5" y="137.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
-    <g class="f t193" style="animation-delay:0s"><rect x="427.5" y="137.5" width="5" height="5" rx="1" fill="#26a641"/></g>
-    <g class="f t194" style="animation-delay:0s"><rect x="447.5" y="137.5" width="5" height="5" rx="1" fill="#39d353"/></g>
+    <g class="f t193" style="animation-delay:0s"><rect x="427.5" y="137.5" width="5" height="5" rx="1" fill="#006d32"/></g>
+    <g class="f t194" style="animation-delay:0s"><rect x="447.5" y="137.5" width="5" height="5" rx="1" fill="#26a641"/></g>
     <g class="f t195" style="animation-delay:0s"><rect x="467.5" y="137.5" width="5" height="5" rx="1" fill="#006d32"/></g>
     <g class="f t197" style="animation-delay:0s"><rect x="487.5" y="137.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t205" style="animation-delay:0s"><rect x="607.5" y="137.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
-    <g class="f t207" style="animation-delay:0s"><rect x="627.5" y="137.5" width="5" height="5" rx="1" fill="#26a641"/></g>
+    <g class="f t207" style="animation-delay:0s"><rect x="627.5" y="137.5" width="5" height="5" rx="1" fill="#006d32"/></g>
     <g class="f t208" style="animation-delay:0s"><rect x="647.5" y="137.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t210" style="animation-delay:0s"><rect x="667.5" y="137.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t211" style="animation-delay:0s"><rect x="687.5" y="137.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
@@ -536,19 +536,19 @@
     <g class="f t228" style="animation-delay:0s"><rect x="927.5" y="137.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t230" style="animation-delay:0s"><rect x="947.5" y="137.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t231" style="animation-delay:0s"><rect x="967.5" y="137.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
-    <g class="f t234" style="animation-delay:0s"><rect x="1007.5" y="137.5" width="5" height="5" rx="1" fill="#006d32"/></g>
+    <g class="f t234" style="animation-delay:0s"><rect x="1007.5" y="137.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t235" style="animation-delay:0s"><rect x="1027.5" y="137.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t238" style="animation-delay:0s"><rect x="1067.5" y="137.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
-    <g class="f t243" style="animation-delay:0s"><rect x="1127.5" y="137.5" width="5" height="5" rx="1" fill="#006d32"/></g>
+    <g class="f t243" style="animation-delay:0s"><rect x="1127.5" y="137.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t244" style="animation-delay:0s"><rect x="1127.5" y="157.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t245" style="animation-delay:0s"><rect x="1127.5" y="177.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
-    <g class="f t247" style="animation-delay:0s"><rect x="1107.5" y="177.5" width="5" height="5" rx="1" fill="#006d32"/></g>
-    <g class="f t248" style="animation-delay:0s"><rect x="1087.5" y="177.5" width="5" height="5" rx="1" fill="#26a641"/></g>
+    <g class="f t247" style="animation-delay:0s"><rect x="1107.5" y="177.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
+    <g class="f t248" style="animation-delay:0s"><rect x="1087.5" y="177.5" width="5" height="5" rx="1" fill="#006d32"/></g>
     <g class="f t250" style="animation-delay:0s"><rect x="1067.5" y="177.5" width="5" height="5" rx="1" fill="#006d32"/></g>
     <g class="f t251" style="animation-delay:0s"><rect x="1047.5" y="177.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t253" style="animation-delay:0s"><rect x="1027.5" y="177.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t254" style="animation-delay:0s"><rect x="1007.5" y="177.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
-    <g class="f t256" style="animation-delay:0s"><rect x="987.5" y="177.5" width="5" height="5" rx="1" fill="#006d32"/></g>
+    <g class="f t256" style="animation-delay:0s"><rect x="987.5" y="177.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t257" style="animation-delay:0s"><rect x="967.5" y="177.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t258" style="animation-delay:0s"><rect x="947.5" y="177.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t261" style="animation-delay:0s"><rect x="907.5" y="177.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
@@ -579,8 +579,8 @@
     <g class="f t307" style="animation-delay:0s"><rect x="267.5" y="177.5" width="5" height="5" rx="1" fill="#006d32"/></g>
     <g class="f t308" style="animation-delay:0s"><rect x="247.5" y="177.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t310" style="animation-delay:0s"><rect x="227.5" y="177.5" width="5" height="5" rx="1" fill="#006d32"/></g>
-    <g class="f t311" style="animation-delay:0s"><rect x="207.5" y="177.5" width="5" height="5" rx="1" fill="#006d32"/></g>
-    <g class="f t313" style="animation-delay:0s"><rect x="187.5" y="177.5" width="5" height="5" rx="1" fill="#006d32"/></g>
+    <g class="f t311" style="animation-delay:0s"><rect x="207.5" y="177.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
+    <g class="f t313" style="animation-delay:0s"><rect x="187.5" y="177.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t316" style="animation-delay:0s"><rect x="147.5" y="177.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t318" style="animation-delay:0s"><rect x="107.5" y="177.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t321" style="animation-delay:0s"><rect x="67.5" y="177.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
@@ -588,12 +588,12 @@
     <g class="f t324" style="animation-delay:0s"><rect class="pw" x="64.5" y="214.5" width="11" height="11" rx="2" fill="#39d353"/></g>
     <g class="f t325" style="animation-delay:0s"><rect x="87.5" y="217.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t330" style="animation-delay:0s"><rect x="147.5" y="217.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
-    <g class="f t331" style="animation-delay:0s"><rect x="167.5" y="217.5" width="5" height="5" rx="1" fill="#006d32"/></g>
+    <g class="f t331" style="animation-delay:0s"><rect x="167.5" y="217.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t333" style="animation-delay:0s"><rect x="187.5" y="217.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t334" style="animation-delay:0s"><rect x="207.5" y="217.5" width="5" height="5" rx="1" fill="#006d32"/></g>
-    <g class="f t335" style="animation-delay:0s"><rect x="227.5" y="217.5" width="5" height="5" rx="1" fill="#006d32"/></g>
+    <g class="f t335" style="animation-delay:0s"><rect x="227.5" y="217.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t338" style="animation-delay:0s"><rect x="267.5" y="217.5" width="5" height="5" rx="1" fill="#006d32"/></g>
-    <g class="f t340" style="animation-delay:0s"><rect x="287.5" y="217.5" width="5" height="5" rx="1" fill="#26a641"/></g>
+    <g class="f t340" style="animation-delay:0s"><rect x="287.5" y="217.5" width="5" height="5" rx="1" fill="#006d32"/></g>
     <g class="f t341" style="animation-delay:0s"><rect x="307.5" y="217.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t343" style="animation-delay:0s"><rect x="327.5" y="217.5" width="5" height="5" rx="1" fill="#006d32"/></g>
     <g class="f t344" style="animation-delay:0s"><rect x="347.5" y="217.5" width="5" height="5" rx="1" fill="#006d32"/></g>
@@ -601,28 +601,28 @@
     <g class="f t347" style="animation-delay:0s"><rect x="387.5" y="217.5" width="5" height="5" rx="1" fill="#006d32"/></g>
     <g class="f t348" style="animation-delay:0s"><rect x="407.5" y="217.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t350" style="animation-delay:0s"><rect x="427.5" y="217.5" width="5" height="5" rx="1" fill="#39d353"/></g>
-    <g class="f t351" style="animation-delay:0s"><rect x="447.5" y="217.5" width="5" height="5" rx="1" fill="#39d353"/></g>
+    <g class="f t351" style="animation-delay:0s"><rect x="447.5" y="217.5" width="5" height="5" rx="1" fill="#26a641"/></g>
     <g class="f t353" style="animation-delay:0s"><rect x="467.5" y="217.5" width="5" height="5" rx="1" fill="#39d353"/></g>
     <g class="f t354" style="animation-delay:0s"><rect x="487.5" y="217.5" width="5" height="5" rx="1" fill="#26a641"/></g>
     <g class="f t355" style="animation-delay:0s"><rect x="507.5" y="217.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t357" style="animation-delay:0s"><rect x="527.5" y="217.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
-    <g class="f t358" style="animation-delay:0s"><rect x="547.5" y="217.5" width="5" height="5" rx="1" fill="#006d32"/></g>
+    <g class="f t358" style="animation-delay:0s"><rect x="547.5" y="217.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t360" style="animation-delay:0s"><rect x="567.5" y="217.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t361" style="animation-delay:0s"><rect x="587.5" y="217.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t363" style="animation-delay:0s"><rect x="607.5" y="217.5" width="5" height="5" rx="1" fill="#26a641"/></g>
-    <g class="f t364" style="animation-delay:0s"><rect x="627.5" y="217.5" width="5" height="5" rx="1" fill="#006d32"/></g>
+    <g class="f t364" style="animation-delay:0s"><rect x="627.5" y="217.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t365" style="animation-delay:0s"><rect x="647.5" y="217.5" width="5" height="5" rx="1" fill="#006d32"/></g>
     <g class="f t367" style="animation-delay:0s"><rect x="667.5" y="217.5" width="5" height="5" rx="1" fill="#26a641"/></g>
-    <g class="f t368" style="animation-delay:0s"><rect x="687.5" y="217.5" width="5" height="5" rx="1" fill="#39d353"/></g>
+    <g class="f t368" style="animation-delay:0s"><rect x="687.5" y="217.5" width="5" height="5" rx="1" fill="#26a641"/></g>
     <g class="f t370" style="animation-delay:0s"><rect x="707.5" y="217.5" width="5" height="5" rx="1" fill="#26a641"/></g>
-    <g class="f t371" style="animation-delay:0s"><rect x="727.5" y="217.5" width="5" height="5" rx="1" fill="#39d353"/></g>
+    <g class="f t371" style="animation-delay:0s"><rect x="727.5" y="217.5" width="5" height="5" rx="1" fill="#26a641"/></g>
     <g class="f t374" style="animation-delay:0s"><rect x="767.5" y="217.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t375" style="animation-delay:0s"><rect x="787.5" y="217.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t377" style="animation-delay:0s"><rect x="807.5" y="217.5" width="5" height="5" rx="1" fill="#006d32"/></g>
     <g class="f t378" style="animation-delay:0s"><rect x="827.5" y="217.5" width="5" height="5" rx="1" fill="#26a641"/></g>
     <g class="f t380" style="animation-delay:0s"><rect x="847.5" y="217.5" width="5" height="5" rx="1" fill="#26a641"/></g>
     <g class="f t381" style="animation-delay:0s"><rect x="867.5" y="217.5" width="5" height="5" rx="1" fill="#39d353"/></g>
-    <g class="f t383" style="animation-delay:0s"><rect x="887.5" y="217.5" width="5" height="5" rx="1" fill="#26a641"/></g>
+    <g class="f t383" style="animation-delay:0s"><rect x="887.5" y="217.5" width="5" height="5" rx="1" fill="#006d32"/></g>
     <g class="f t384" style="animation-delay:0s"><rect x="907.5" y="217.5" width="5" height="5" rx="1" fill="#0e4429"/></g>
     <g class="f t385" style="animation-delay:0s"><rect x="927.5" y="217.5" width="5" height="5" rx="1" fill="#006d32"/></g>
     <g class="f t387" style="animation-delay:0s"><rect x="947.5" y="217.5" width="5" height="5" rx="1" fill="#39d353"/></g>
@@ -630,10 +630,10 @@
     <g class="f t390" style="animation-delay:0s"><rect x="987.5" y="217.5" width="5" height="5" rx="1" fill="#39d353"/></g>
     <g class="f t391" style="animation-delay:0s"><rect x="1007.5" y="217.5" width="5" height="5" rx="1" fill="#26a641"/></g>
     <g class="f t393" style="animation-delay:0s"><rect x="1027.5" y="217.5" width="5" height="5" rx="1" fill="#39d353"/></g>
-    <g class="f t394" style="animation-delay:0s"><rect x="1047.5" y="217.5" width="5" height="5" rx="1" fill="#39d353"/></g>
+    <g class="f t394" style="animation-delay:0s"><rect x="1047.5" y="217.5" width="5" height="5" rx="1" fill="#26a641"/></g>
     <g class="f t395" style="animation-delay:0s"><rect x="1067.5" y="217.5" width="5" height="5" rx="1" fill="#26a641"/></g>
     <g class="f t397" style="animation-delay:0s"><rect x="1087.5" y="217.5" width="5" height="5" rx="1" fill="#39d353"/></g>
-    <g class="f t398" style="animation-delay:0s"><rect x="1107.5" y="217.5" width="5" height="5" rx="1" fill="#26a641"/></g>
+    <g class="f t398" style="animation-delay:0s"><rect x="1107.5" y="217.5" width="5" height="5" rx="1" fill="#39d353"/></g>
     <g class="f t400" style="animation-delay:0s"><rect class="pw" x="1124.5" y="214.5" width="11" height="11" rx="2" fill="#39d353"/></g>
   </g>
   <g data-line="sprites">
@@ -1032,7 +1032,7 @@
   </g>
   <g class="f t36" style="animation-delay:24.48s"><g class="fl"><rect x="46" y="36" width="1108" height="208" rx="12" fill="none" stroke="#dfe6ff" stroke-width="2.5"/><rect x="82" y="74" width="76" height="12" rx="5" fill="none" stroke="#dfe6ff" stroke-width="2"/><rect x="182" y="74" width="96" height="12" rx="5" fill="none" stroke="#dfe6ff" stroke-width="2"/><rect x="302" y="74" width="76" height="12" rx="5" fill="none" stroke="#dfe6ff" stroke-width="2"/><rect x="402" y="74" width="76" height="12" rx="5" fill="none" stroke="#dfe6ff" stroke-width="2"/><rect x="722" y="74" width="76" height="12" rx="5" fill="none" stroke="#dfe6ff" stroke-width="2"/><rect x="822" y="74" width="76" height="12" rx="5" fill="none" stroke="#dfe6ff" stroke-width="2"/><rect x="922" y="74" width="96" height="12" rx="5" fill="none" stroke="#dfe6ff" stroke-width="2"/><rect x="1042" y="74" width="76" height="12" rx="5" fill="none" stroke="#dfe6ff" stroke-width="2"/><rect x="82" y="114" width="96" height="12" rx="5" fill="none" stroke="#dfe6ff" stroke-width="2"/><rect x="202" y="114" width="56" height="12" rx="5" fill="none" stroke="#dfe6ff" stroke-width="2"/><rect x="282" y="114" width="96" height="12" rx="5" fill="none" stroke="#dfe6ff" stroke-width="2"/><rect x="402" y="114" width="96" height="12" rx="5" fill="none" stroke="#dfe6ff" stroke-width="2"/><rect x="702" y="114" width="96" height="12" rx="5" fill="none" stroke="#dfe6ff" stroke-width="2"/><rect x="822" y="114" width="96" height="12" rx="5" fill="none" stroke="#dfe6ff" stroke-width="2"/><rect x="942" y="114" width="56" height="12" rx="5" fill="none" stroke="#dfe6ff" stroke-width="2"/><rect x="1022" y="114" width="96" height="12" rx="5" fill="none" stroke="#dfe6ff" stroke-width="2"/><rect x="82" y="154" width="96" height="12" rx="5" fill="none" stroke="#dfe6ff" stroke-width="2"/><rect x="202" y="154" width="56" height="12" rx="5" fill="none" stroke="#dfe6ff" stroke-width="2"/><rect x="282" y="154" width="96" height="12" rx="5" fill="none" stroke="#dfe6ff" stroke-width="2"/><rect x="402" y="154" width="96" height="12" rx="5" fill="none" stroke="#dfe6ff" stroke-width="2"/><rect x="702" y="154" width="96" height="12" rx="5" fill="none" stroke="#dfe6ff" stroke-width="2"/><rect x="822" y="154" width="96" height="12" rx="5" fill="none" stroke="#dfe6ff" stroke-width="2"/><rect x="942" y="154" width="56" height="12" rx="5" fill="none" stroke="#dfe6ff" stroke-width="2"/><rect x="1022" y="154" width="96" height="12" rx="5" fill="none" stroke="#dfe6ff" stroke-width="2"/><rect x="82" y="194" width="76" height="12" rx="5" fill="none" stroke="#dfe6ff" stroke-width="2"/><rect x="182" y="194" width="96" height="12" rx="5" fill="none" stroke="#dfe6ff" stroke-width="2"/><rect x="302" y="194" width="76" height="12" rx="5" fill="none" stroke="#dfe6ff" stroke-width="2"/><rect x="402" y="194" width="76" height="12" rx="5" fill="none" stroke="#dfe6ff" stroke-width="2"/><rect x="722" y="194" width="76" height="12" rx="5" fill="none" stroke="#dfe6ff" stroke-width="2"/><rect x="822" y="194" width="76" height="12" rx="5" fill="none" stroke="#dfe6ff" stroke-width="2"/><rect x="922" y="194" width="96" height="12" rx="5" fill="none" stroke="#dfe6ff" stroke-width="2"/><rect x="1042" y="194" width="76" height="12" rx="5" fill="none" stroke="#dfe6ff" stroke-width="2"/></g></g>
   <g class="f t28" style="animation-delay:0s"><rect x="549" y="125" width="102" height="30" rx="6" fill="#09090b"/><text x="600" y="147" text-anchor="middle" textLength="72" font-size="20" font-weight="bold" fill="#f7df1e">READY!</text></g>
-  <g class="f t46" style="animation-delay:24.48s"><rect x="453" y="125" width="294" height="30" rx="6" fill="#09090b"/><text x="600" y="147" text-anchor="middle" textLength="264" font-size="20" font-weight="bold" fill="#39d353">ATE 1275 CONTRIBUTIONS</text></g>
+  <g class="f t46" style="animation-delay:24.48s"><rect x="453" y="125" width="294" height="30" rx="6" fill="#09090b"/><text x="600" y="147" text-anchor="middle" textLength="264" font-size="20" font-weight="bold" fill="#39d353">ATE 1288 CONTRIBUTIONS</text></g>
   </g>
 
   <g class="sc" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace" font-size="19" xml:space="preserve">
